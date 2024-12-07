@@ -13,6 +13,7 @@ export default function LinkedInCallback() {
         const code = urlParams.get("code");
         const state = urlParams.get("state");
 
+        
         console.log("LinkedIn callback code:", code);
 
         if (!code) {

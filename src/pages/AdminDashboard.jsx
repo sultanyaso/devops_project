@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/auth/AuthContext';
+import { useAuth } from '../contexts/auth/authContext';
 import { Users, Shield, BarChart2, LogOut, Bell, Settings } from 'lucide-react';
 import UserManagement from '../components/admin/UserManagement';
 import ContentModeration from '../components/admin/ContentModeration';

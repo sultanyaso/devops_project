@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Shield, AlertCircle } from 'lucide-react';
-import { useAuth } from '../contexts/auth/AuthContext';
+import { useAuth } from '../contexts/auth/authContext';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');

@@ -52,7 +52,8 @@ export async function handleLinkedInCallback(code) {
 
     localStorage.setItem("linkedinAccessToken", accessToken);
 
-    localStorage.setItem("linkedinAccessToken", accessToken);
+    console.log("LinkedIn profile:", profile);
+
 
     const userData = {
       id: profile.id,

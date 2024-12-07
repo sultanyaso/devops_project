@@ -1,18 +1,26 @@
-export const saveUserSession = (userData) => {
-  localStorage.setItem('user', JSON.stringify(userData));
-  localStorage.setItem('accessToken', userData.accessToken);
+export const saveUserSession = (sessionData) => {
+  localStorage.setItem('token', sessionData.token);
+  localStorage.setItem('userId', sessionData.userId);
 };
 
 export const clearUserSession = () => {
-  localStorage.removeItem('user');
-  localStorage.removeItem('accessToken');
+  localStorage.removeItem('token');
+  localStorage.removeItem('userId');
+};
+
+export const getToken = () => {
+  return localStorage.getItem('token');
+};
+
+export const getUserId = () => {
+  return localStorage.getItem('userId');
 };
 
 export const getUserSession = () => {
-  const user = localStorage.getItem('user');
-  return user ? JSON.parse(user) : null;
-};
-
-export const getAccessToken = () => {
-  return localStorage.getItem('accessToken');
-};
+  const token = getToken();
+  const userId = getUserId();
+  if (token && userId) {
+    return { token, userId };
+  }
+  return null;
+}

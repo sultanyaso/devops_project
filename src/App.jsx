@@ -7,7 +7,7 @@ import CoachDashboard from './pages/CoachDashboard.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import AdminLogin from './pages/AdminLogin';
 import LinkedInCallback from './pages/LinkedInCallback';
-import { AuthProvider, useAuth } from './contexts/auth/AuthContext';
+import { AuthProvider, useAuth } from './contexts/auth/authContext.jsx';
 import connectDB from './config/db';
 
 function ProtectedRoute({ children, allowedRole }) {
@@ -37,7 +37,7 @@ function AppRoutes() {
   const { user } = useAuth();
   
   useEffect(() => {
-    connectDB();
+    // connectDB();
   }, []);
 
 

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import { saveUserSession, clearUserSession, getUserSession } from './authStorage';
+import { saveUserSession, clearUserSession, getUserSession, getToken, getUserId  } from './authStorage';
 
 const AuthContext = createContext();
 
@@ -11,25 +11,35 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedUser = getUserSession();
-    if (savedUser) {
-      setUser(savedUser);
+    const token = getToken();
+    if (token) {
+      // Validate token and get user data
+      validateSession();
     }
     setLoading(false);
   }, []);
 
-  const login = async (email, password) => {
-    // Simulated user authentication
-    mockUser = {
-      id: '1',
-      email,
-      role: 'student',
-    };
+  const validateSession = async () => {
+    try {
+      const response = await axios.get('/api/auth/validate', {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+      setUser(response.data.user);
+    } catch (error) {
+      clearUserSession();
+    }
+  };
 
-    
-    saveUserSession(mockUser);
-    setUser(mockUser);
-    navigate('/student-dashboard');
+  const login = async (email, password) => {
+    try {
+      const response = await axios.post('/api/auth/login', { email, password });
+      const { user, token } = response.data;
+      saveUserSession({ token, userId: user._id });
+      setUser(user);
+      navigate(`/${user.role}-dashboard`);
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Login failed');
+    }
   };
 
   const loginAsAdmin = async (email, password) => {
@@ -48,14 +58,17 @@ export function AuthProvider({ children }) {
     throw new Error('Invalid admin credentials');
   };
 
-  const loginWithLinkedIn = async (userData) => {
-    const user = {
-      ...userData,
-      role: 'student',
-    };
-    saveUserSession(user);
-    setUser(user);
-    navigate('/student-dashboard');
+  const loginWithLinkedIn = async (code) => {
+    try {
+      const response = await axios.post('/api/auth/linkedin', { code });
+      const { user, token } = response.data;
+      
+      saveUserSession({ token, userId: user._id });
+      setUser(user);
+      navigate('/student-dashboard');
+    } catch (error) {
+      throw new Error('LinkedIn login failed');
+    }
   };
 
   const signup = async (email, password, role) => {
