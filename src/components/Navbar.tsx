@@ -1,6 +1,6 @@
-import React from 'react';
-import { Menu, X, Rocket, ChevronDown } from 'lucide-react';
-import { useAuth } from '../contexts/auth/authContext';
+import React from "react";
+import { Menu, X, Rocket, ChevronDown } from "lucide-react";
+import { useAuth } from "../contexts/auth/authContext";
 
 interface NavbarProps {
   onAuthClick: () => void;
@@ -16,9 +16,9 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
         <div className="flex justify-between h-16 items-center">
           <div className="flex items-center">
             <Rocket className="h-8 w-8 text-indigo-600" />
-            <span className="ml-2 text-xl font-bold text-gray-900">CareerLaunch AI</span>
+            <span className="ml-2 text-xl font-bold text-gray-900">LEAP</span>
           </div>
-          
+
           <div className="hidden md:flex items-center space-x-8">
             <NavLink href="#features">Features</NavLink>
             <NavLink href="#pricing">Pricing</NavLink>
@@ -40,10 +40,7 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
             )}
           </div>
 
-          <button 
-            className="md:hidden"
-            onClick={() => setIsOpen(!isOpen)}
-          >
+          <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
@@ -78,7 +75,13 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
   );
 }
 
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+const NavLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
   <a
     href={href}
     className="text-gray-700 hover:text-indigo-600 transition-colors font-medium"
@@ -87,7 +90,13 @@ const NavLink = ({ href, children }: { href: string; children: React.ReactNode }
   </a>
 );
 
-const MobileNavLink = ({ href, children }: { href: string; children: React.ReactNode }) => (
+const MobileNavLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) => (
   <a
     href={href}
     className="block px-3 py-2 text-gray-700 hover:text-indigo-600 transition-colors font-medium"
