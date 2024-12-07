@@ -14,5 +14,5 @@ export const getUserSession = () => {
 };
 
 export const getAccessToken = () => {
-  return localStorage.getItem('accessToken');
+  return localStorage.getItem('linkedinAccessToken');
 };

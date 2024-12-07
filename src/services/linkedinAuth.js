@@ -50,6 +50,8 @@ export async function handleLinkedInCallback(code) {
     const accessToken = await exchangeCodeForToken(code);
     const profile = await fetchLinkedInProfile(accessToken);
 
+    localStorage.setItem("linkedinAccessToken", accessToken);
+
     return {
       id: profile.id,
       firstName: profile.firstName.localized.en_US,

@@ -57,22 +57,34 @@ export const isLinkedInConnected = () => {
 
 export const getProfileData = async () => {
   const accessToken = getAccessToken();
+
+  console.log('Access token:', accessToken);
   
   if (!accessToken) {
+    console.warn('No access token available');
     return null;
   }
 
   try {
-    const response = await axios.get(`${LINKEDIN_API_BASE}/me`, {
+    const response = await axios.get(`${LINKEDIN_API_BASE}/userinfo`, {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {
-        projection: '(id,firstName,lastName,profilePicture(displayImage~:playableStreams))'
+        projection: '(id,firstName,lastName,emailAddress,profilePicture(displayImage~:playableStreams))'
       }
     });
+
+    if (response.status !== 200) {
+      console.error('Unexpected response status:', response.status);
+      return null;
+    }
     
     return response.data;
   } catch (error) {
-    console.error('Error fetching LinkedIn profile:', error);
+    if (error.response) {
+      console.error('Error fetching LinkedIn profile:', error.response.data);
+    } else {
+      console.error('Error fetching LinkedIn profile:', error.message);
+    }
     return null;
   }
 };
