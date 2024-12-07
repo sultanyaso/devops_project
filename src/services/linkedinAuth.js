@@ -50,17 +50,23 @@ export async function handleLinkedInCallback(code) {
     const accessToken = await exchangeCodeForToken(code);
     const profile = await fetchLinkedInProfile(accessToken);
 
+<<<<<<< HEAD
     localStorage.setItem("linkedinAccessToken", accessToken);
 
     console.log("LinkedIn profile:", profile);
 
+=======
+    localStorage.setItem("AccessToken", accessToken);
+>>>>>>> 20368886c02c76c9c6a4fc04affcf7fc5788f61d
 
     const userData = {
       id: profile.id,
-      firstName: profile.firstName.localized.en_US,
-      lastName: profile.lastName.localized.en_US,
-      email: profile.emailAddress,
-      profilePicture: profile.profilePicture?.["displayImage~"]?.elements[0]?.identifiers[0]?.identifier,
+      given_name: profile.given_name.localized.en_US,
+      family_name: profile.family_name.localized.en_US,
+      email: profile.email,
+      profilePicture:
+        profile.profilePicture?.["displayImage~"]?.elements[0]?.identifiers[0]
+          ?.identifier,
       accessToken,
     };
 

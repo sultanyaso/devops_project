@@ -7,8 +7,13 @@ import CoachDashboard from './pages/CoachDashboard.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import AdminLogin from './pages/AdminLogin';
 import LinkedInCallback from './pages/LinkedInCallback';
+<<<<<<< HEAD
 import { AuthProvider, useAuth } from './contexts/auth/authContext.jsx';
 import connectDB from './config/db';
+=======
+import { AuthProvider, useAuth } from './contexts/auth/authContext';
+import connectDB from './config/db.js';
+>>>>>>> 20368886c02c76c9c6a4fc04affcf7fc5788f61d
 
 function ProtectedRoute({ children, allowedRole }) {
   const { user } = useAuth();
@@ -37,7 +42,11 @@ function AppRoutes() {
   const { user } = useAuth();
   
   useEffect(() => {
+<<<<<<< HEAD
     // connectDB();
+=======
+    // connectDB(); // Remove this line
+>>>>>>> 20368886c02c76c9c6a4fc04affcf7fc5788f61d
   }, []);
 
 

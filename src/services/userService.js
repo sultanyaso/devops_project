@@ -1,22 +1,22 @@
-import User from '../models/userModel';
+import User from "../models/userModel";
 
 export const createOrUpdateLinkedInUser = async (linkedInProfile) => {
   try {
     const user = await User.findOneAndUpdate(
       { linkedInId: linkedInProfile.id },
       {
-        name: `${linkedInProfile.firstName} ${linkedInProfile.lastName}`,
+        name: `${linkedInProfile.given_name} ${linkedInProfile.family_name}`,
         email: linkedInProfile.email,
         linkedInId: linkedInProfile.id,
         linkedInAccessToken: linkedInProfile.accessToken,
-        profilePicture: linkedInProfile.profilePicture,
-        status: 'active'
+        profilePicture: linkedInProfile.picture,
+        status: "active",
       },
       { upsert: true, new: true }
     );
     return user;
   } catch (error) {
-    console.error('Error creating/updating user:', error);
+    console.error("Error creating/updating user:", error);
     throw error;
   }
 };

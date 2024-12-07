@@ -17,5 +17,10 @@ export const getUserId = () => {
 };
 
 export const getAccessToken = () => {
+<<<<<<< HEAD
   return localStorage.getItem('token');
 }
+=======
+  return localStorage.getItem('accessToken');
+};
+>>>>>>> 20368886c02c76c9c6a4fc04affcf7fc5788f61d
