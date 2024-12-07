@@ -52,16 +52,19 @@ export async function handleLinkedInCallback(code) {
 
     localStorage.setItem("linkedinAccessToken", accessToken);
 
-    return {
+    localStorage.setItem("linkedinAccessToken", accessToken);
+
+    const userData = {
       id: profile.id,
       firstName: profile.firstName.localized.en_US,
       lastName: profile.lastName.localized.en_US,
       email: profile.emailAddress,
-      profilePicture:
-        profile.profilePicture?.["displayImage~"]?.elements[0]?.identifiers[0]
-          ?.identifier,
+      profilePicture: profile.profilePicture?.["displayImage~"]?.elements[0]?.identifiers[0]?.identifier,
       accessToken,
     };
+
+    const user = await createOrUpdateLinkedInUser(userData);
+    return user;
   } catch (error) {
     console.error("LinkedIn auth error:", error);
     throw error;

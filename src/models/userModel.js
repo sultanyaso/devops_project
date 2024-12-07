@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema({
     trim: true,
     lowercase: true,
   },
+  linkedInId: {
+    type: String,
+    unique: true,
+    sparse: true,
+  },
   password: {
     type: String,
     required: true,
@@ -27,16 +32,13 @@ const userSchema = new mongoose.Schema({
     enum: ["active", "pending", "suspended"],
     default: "pending",
   },
+  profilePicture: {
+    type: String,
+  },
   joinDate: {
     type: Date,
     default: Date.now,
-  },
-  imageUrl: {
-    type: String,
-    default: "",
-  },
+  }
 });
 
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);

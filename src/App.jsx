@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import LandingPage from './pages/LandingPage';
@@ -8,6 +8,7 @@ import AdminDashboard from './pages/AdminDashboard.jsx';
 import AdminLogin from './pages/AdminLogin';
 import LinkedInCallback from './pages/LinkedInCallback';
 import { AuthProvider, useAuth } from './contexts/auth/AuthContext';
+import connectDB from './config/db';
 
 function ProtectedRoute({ children, allowedRole }) {
   const { user } = useAuth();
@@ -34,6 +35,11 @@ ProtectedRoute.propTypes = {
 
 function AppRoutes() {
   const { user } = useAuth();
+  
+  useEffect(() => {
+    connectDB();
+  }, []);
+
 
   return (
     <Routes>
