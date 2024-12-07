@@ -10,7 +10,11 @@ import NetworkAnalysisModal from "../components/network/NetworkAnalysisModal";
 import LinkedInPrompt from "../components/linkedin/LinkedInPrompt";
 import QuickAction from "../components/dashboard/QuickAction";
 import { scheduleSession, getSessionsByUser } from "../services/sessionService";
-import { getNetworkStats, isLinkedInConnected, getProfileData } from "../services/linkedinService";
+import {
+  getNetworkStats,
+  isLinkedInConnected,
+  getProfileData,
+} from "../services/linkedinService";
 
 export default function StudentDashboard() {
   const { user, logout } = useAuth();
@@ -43,8 +47,8 @@ export default function StudentDashboard() {
         if (profileData) {
           console.log("Profile Data:", profileData);
           setLinkedInUser({
-            name: `${profileData.firstName.localized.en_US} ${profileData.lastName.localized.en_US}`,
-            email: profileData.emailAddress,
+            name: `${profileData.given_name.localized.en_US} ${profileData.family_name.localized.en_US}`,
+            email: profileData.email,
           });
         }
       } catch (error) {
@@ -66,7 +70,7 @@ export default function StudentDashboard() {
         ...sessionData,
         student: {
           id: user.id,
-          name: user.firstName + " " + user.lastName,
+          name: user.given_name + " " + user.family_name,
           imageUrl:
             user.profilePicture ||
             "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",

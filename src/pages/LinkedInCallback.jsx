@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth/authContext";
 
 export default function LinkedInCallback() {
   const navigate = useNavigate();
   const { loginWithLinkedIn } = useAuth();
+  const hasRun = useRef(false);
 
   useEffect(() => {
     const handleCallback = async () => {
@@ -14,6 +15,7 @@ export default function LinkedInCallback() {
         const state = urlParams.get("state");
 
         console.log("LinkedIn callback code:", code);
+        console.log("LinkedIn callback state:", state);
 
         if (!code) {
           throw new Error("No code received from LinkedIn");
@@ -27,7 +29,10 @@ export default function LinkedInCallback() {
       }
     };
 
-    handleCallback();
+    if (!hasRun.current) {
+      handleCallback();
+      hasRun.current = true;
+    }
   }, [loginWithLinkedIn, navigate]);
 
   return (

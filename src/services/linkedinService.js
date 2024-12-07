@@ -7,6 +7,7 @@ export const getNetworkStats = async () => {
   const accessToken = getAccessToken();
   
   if (!accessToken) {
+    console.error('LinkedIn access token not found');
     return null;
   }
 
@@ -62,7 +63,7 @@ export const getProfileData = async () => {
   console.log('Access token:', accessToken);
   
   if (!accessToken) {
-    console.warn('No access token available');
+    console.log('No access token available');
     return null;
   }
 
@@ -70,7 +71,7 @@ export const getProfileData = async () => {
     const response = await axios.get(`${LINKEDIN_API_BASE}/userinfo`, {
       headers: { Authorization: `Bearer ${accessToken}` },
       params: {
-        projection: '(id,firstName,lastName,emailAddress,profilePicture(displayImage~:playableStreams))'
+        projection: '(sub,given_name,family_name,email,picture)'
       }
     });
 
