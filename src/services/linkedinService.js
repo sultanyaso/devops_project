@@ -48,6 +48,7 @@ export const getNetworkStats = async () => {
 export const isLinkedInConnected = () => {
   try {
     const accessToken = getAccessToken();
+    console.log('accessToken:', accessToken);
     return Boolean(accessToken);
   } catch (error) {
     console.error('Error checking LinkedIn connection:', error);

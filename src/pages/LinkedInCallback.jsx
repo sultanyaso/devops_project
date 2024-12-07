@@ -18,7 +18,7 @@ export default function LinkedInCallback() {
         }
 
         await loginWithLinkedIn(code);
-        navigate('/dashboard');
+        navigate('/');
       } catch (error) {
         console.error('LinkedIn authentication error:', error);
         navigate('/', { state: { error: 'LinkedIn authentication failed' } });

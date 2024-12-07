@@ -19,12 +19,14 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (email, password) => {
-    // Simulated API call
-    const mockUser = {
+    // Simulated user authentication
+    mockUser = {
       id: '1',
       email,
       role: 'student',
     };
+
+    
     saveUserSession(mockUser);
     setUser(mockUser);
     navigate('/student-dashboard');
