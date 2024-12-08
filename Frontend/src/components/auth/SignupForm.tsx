@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useAuth } from '../../contexts/authContext';
 
 interface SignupFormProps {
@@ -6,20 +6,21 @@ interface SignupFormProps {
 }
 
 export default function SignupForm({ onSuccess }: SignupFormProps) {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [role, setRole] = React.useState('student');
-  const [error, setError] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('student');
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { signup } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
 
     try {
-      await signup(email, password, role);
+      await signup(name, email, password, role);
       onSuccess();
     } catch (err) {
       setError('Failed to create account. Please try again.');
@@ -28,11 +29,29 @@ export default function SignupForm({ onSuccess }: SignupFormProps) {
     }
   };
 
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, setter: (value: string) => void) => {
+    setter(e.target.value);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && (
         <div className="text-red-500 text-sm text-center">{error}</div>
       )}
+
+      <div>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+          Name
+        </label>
+        <input
+          id="name"
+          type="text"
+          required
+          value={name}
+          onChange={(e) => handleInputChange(e, setName)}
+          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        />
+      </div>
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
@@ -43,7 +62,7 @@ export default function SignupForm({ onSuccess }: SignupFormProps) {
           type="email"
           required
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => handleInputChange(e, setEmail)}
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         />
       </div>
@@ -57,7 +76,7 @@ export default function SignupForm({ onSuccess }: SignupFormProps) {
           type="password"
           required
           value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => handleInputChange(e, setPassword)}
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         />
       </div>
@@ -69,7 +88,7 @@ export default function SignupForm({ onSuccess }: SignupFormProps) {
         <select
           id="role"
           value={role}
-          onChange={(e) => setRole(e.target.value)}
+          onChange={(e) => handleInputChange(e, setRole)}
           className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         >
           <option value="student">Student/Job Seeker</option>

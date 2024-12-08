@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, X, Rocket, ChevronDown } from "lucide-react";
-import { useAuth } from "../contexts/authContext";
+import { useAuth } from "../../contexts/authContext";
 
 interface NavbarProps {
   onAuthClick: () => void;

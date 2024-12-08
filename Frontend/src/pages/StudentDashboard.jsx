@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/authContext";
 import { Bot, Users, LineChart, Calendar, LogOut } from "lucide-react";
-import PostGenerator from "../components/post-generator/PostGenerator";
-import CoachList from "../components/scheduling/CoachList";
-import SessionScheduler from "../components/scheduling/SessionScheduler";
-import SessionsList from "../components/scheduling/SessionsList";
-import NetworkStats from "../components/dashboard/NetworkStats";
-import NetworkAnalysisModal from "../components/network/NetworkAnalysisModal";
-import LinkedInPrompt from "../components/linkedin/LinkedInPrompt";
-import QuickAction from "../components/dashboard/QuickAction";
+import PostGenerator from "../components/student/PostGenerator";
+import CoachList from "../components/student/CoachList";
+import SessionScheduler from "../components/student/SessionScheduler";
+import SessionsList from "../components/student/SessionsList";
+import NetworkStats from "../components/student/NetworkStats";
+import NetworkAnalysisModal from "../components/student/network/NetworkAnalysisModal";
+import LinkedInPrompt from "../components/student/LinkedInPrompt";
+import QuickAction from "../components/student/QuickAction";
 import { scheduleSession, getSessionsByUser } from "../services/sessionService";
 import {
   getNetworkStats,
