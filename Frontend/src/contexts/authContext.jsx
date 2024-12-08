@@ -53,7 +53,7 @@ export function AuthProvider({ children }) {
 
   const loginWithLinkedIn = async (code) => {
     try {
-      const { accessToken } = await authService.exchangeLinkedInCode(code);
+      const { accessToken } = await authService.exchangeLinkedInToken(code);
       const userData = await authService.getLinkedInUser(accessToken);
       
       const user = {

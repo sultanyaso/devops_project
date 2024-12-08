@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/authContext";
+import { authService } from "../services/authService";
 
 export default function LinkedInCallback() {
   const navigate = useNavigate();
@@ -14,11 +15,14 @@ export default function LinkedInCallback() {
         const code = urlParams.get("code");
         const state = urlParams.get("state");
 
+        // get token in exchange for code by calling the backend
+        const accessToken = await authService.getLinkedInToken(code);
+
         
         if (!code) {
           throw new Error("No code received from LinkedIn");
         }
-        
+        console.log("LinkedIn Access Token:", accessToken);
         console.log("LinkedIn callback code:", code);
         console.log("LinkedIn callback state:", state);
 
