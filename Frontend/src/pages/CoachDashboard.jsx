@@ -4,7 +4,7 @@ import { Users, MessageSquare, LineChart, Calendar, LogOut, Award } from 'lucide
 import ScheduleView from '../components/coach/ScheduleView';
 import ClientProgress from '../components/coach/ClientProgress';
 import ResourceLibrary from '../components/coach/ResourceLibrary';
-import SessionService from '../services/sessionService';
+import sessionService from '../services/sessionService';
 
 function StatCard({ title, value, change, icon: Icon }) {
   return (
@@ -36,19 +36,46 @@ export default function CoachDashboard() {
   const [activeTab, setActiveTab] = useState('schedule');
   const [sessions, setSessions] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-      setLoading(false);
-      // loadSessions();
-  }, [user]);
-
+  
   const loadSessions = async () => {
-    if (user) {
-      const userSessions = await getSessionsByUser(user.id, 'coach');
-      setSessions(userSessions);
+    try {
+      if (user) {
+        const userSessions = await sessionService.getSessionsByUser(user.id, 'coach');
+        // Transform sessions to ensure required id property exists
+        const transformedSessions = userSessions.map(session => ({
+          id: session._id || session.id, // handle both MongoDB _id and regular id
+          ...session
+        }));
+        setSessions(transformedSessions);
+      }
+    } catch (error) {
+      console.error('Error loading sessions:', error);
+      setSessions([]); // Set empty array as fallback
+    } finally {
       setLoading(false);
     }
   };
+
+  const onConfirm = async (sessionId) => {
+    try {
+      await sessionService.updateSession(sessionId, { status: 'confirmed' });
+      setSessions((prevSessions) =>
+        prevSessions.map((session) =>
+          session.id === sessionId ? { ...session, status: 'completed' } : session
+        )
+      );
+    } catch (error) {
+      console.error('Error confirming session:', error);
+    }
+  };
+
+  useEffect(() => {
+      setLoading(false);
+      // load sessions
+      loadSessions();
+
+  }, [user]);
+
 
   // Mock data for demonstration
   const mockClients = [
@@ -106,7 +133,7 @@ export default function CoachDashboard() {
   const renderContent = () => {
     switch (activeTab) {
       case 'schedule':
-        return <ScheduleView sessions={sessions} />;
+        return <ScheduleView sessions={sessions} onConfirm={onConfirm} />;
       case 'progress':
         return <ClientProgress clients={mockClients} />;
       case 'resources':

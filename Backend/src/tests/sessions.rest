@@ -36,3 +36,24 @@ Content-Type: application/json
 
 # Delete session by ID (replace with actual sessionId)
 DELETE http://localhost:5000/api/sessions/6755a2e71d44999c9b958a92
+
+###
+
+# Get all sessions for a specific coach
+GET http://localhost:5000/api/sessions/coach/675585b538da439b04294109
+
+
+###
+
+# Create a new session
+POST http://localhost:5000/api/sessions/create
+Content-Type: application/json
+
+{
+  "title": "Session",
+  "date": "2024-12-14T10:00:00Z",
+  "time": "10:04 AM",
+  "duration": 40,
+  "coachUserId": "675585b538da439b04294109",
+  "studentUserId": "67559e83defbd53afcf4d32f"
+}

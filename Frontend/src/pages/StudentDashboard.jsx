@@ -33,23 +33,30 @@ export default function StudentDashboard() {
     const loadData = async () => {
       try {
         setError(null);
-        const linkedInStatus = await isLinkedInConnected();
-        setIsLinkedIn(linkedInStatus);
+        // const linkedInStatus = await isLinkedInConnected();
+        // setIsLinkedIn(linkedInStatus);
 
-        const [userSessions, stats, profileData] = await Promise.all([
-          sessionService.getSessionsByUser(user?.id, "student"),
-          linkedInStatus ? getNetworkStats() : null,
-          linkedInStatus ? getProfileData() : null,
-        ]);
+        // const [userSessions, stats, profileData] = await Promise.all([
+        //   sessionService.getSessionsByUser(user?.id, "student"),
+        //   linkedInStatus ? getNetworkStats() : null,
+        //   linkedInStatus ? getProfileData() : null,
+        // ]);
 
-        setSessions(userSessions || []);
-        setNetworkStats(stats);
-        if (profileData) {
-          setLinkedInUser({
-            name: `${profileData.given_name.localized.en_US} ${profileData.family_name.localized.en_US}`,
-            email: profileData.email,
-          });
-        }
+        // setSessions(userSessions || []);
+        // setNetworkStats(stats);
+        // if (profileData) {
+        //   setLinkedInUser({
+        //     name: `${profileData.given_name.localized.en_US} ${profileData.family_name.localized.en_US}`,
+        //     email: profileData.email,
+        //   });
+        // }
+
+        const sessions = await sessionService.getSessionsByUser(user?.id, "student");
+        setSessions(sessions || []);
+
+
+
+
       } catch (error) {
         console.error("Error loading dashboard data:", error);
         setError("Failed to load some dashboard data. Please try refreshing.");
@@ -167,7 +174,7 @@ export default function StudentDashboard() {
           <h2 className="text-lg font-medium text-gray-900 mb-4">
             Upcoming Sessions
           </h2>
-          <SessionsList sessions={sessions} userRole="student" />
+          <SessionsList sessions={sessions} />
         </div>
 
         {showPostGenerator && (
