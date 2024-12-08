@@ -1,0 +1,39 @@
+# Create a new session
+POST http://localhost:5000/api/sessions/create
+Content-Type: application/json
+
+{
+  "sessionId": "s12345",
+  "title": "Session with Coach Ubaid",
+  "date": "2024-12-15T10:00:00Z",
+  "time": "10:00 AM",
+  "duration": 60,
+  "coachUserId": "675585b538da439b04294109",
+  "studentUserId": "675576a0defbd53afcf4d31d"
+}
+
+###
+
+# Get all sessions
+GET http://localhost:5000/api/sessions/
+
+###
+
+# Get session by ID (replace with actual sessionId)
+GET http://localhost:5000/api/sessions/s12345
+
+###
+
+# Update session by ID (replace with actual sessionId)
+PATCH http://localhost:5000/api/sessions/s12345
+Content-Type: application/json
+
+{
+  "title": "Updated Session with Coach A",
+  "status": "confirmed"
+}
+
+###
+
+# Delete session by ID (replace with actual sessionId)
+DELETE http://localhost:5000/api/sessions/s12345
