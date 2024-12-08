@@ -1,0 +1,39 @@
+### Register a new user
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test User",
+  "email": "testuser@example.com",
+  "password": "password123",
+  "role": "student"
+}
+
+### Register a admin user
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Test Admin",
+  "email": "testadmin@example.com",
+  "password": "password123",
+  "role": "admin"
+}
+
+### Login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "testuser@example.com",
+  "password": "password123"
+}
+
+### Get Current User
+# Replace <token> with the actual JWT token from the login response
+GET http://localhost:5000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzMTFlNmRjNDA1NTdiZjU1YjEiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTczMzY1MTUxNywiZXhwIjoxNzMzNzM3OTE3fQ.o2_2yBB2tqtGFIaFQG-euZXSIARxPt-zC4CIoh907vQ
+
+### LinkedIn OAuth Callback
+# Simulating LinkedIn OAuth callback
+GET http://localhost:3000/api/linkedin/callback

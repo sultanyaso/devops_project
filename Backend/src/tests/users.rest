@@ -1,0 +1,22 @@
+### Get User Profile
+# Replace <token> with a valid JWT token
+GET http://localhost:5000/api/users/profile
+Authorization: Bearer <token>
+Content-Type: application/json
+
+### Update User Profile
+# Replace <token> with a valid JWT token
+PUT http://localhost:5000/api/users/profile
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "email": "newemail@example.com",
+  "password": "newpassword123"
+}
+
+### Delete User Account
+# Replace <token> with a valid JWT token
+DELETE http://localhost:5000/api/users/profile
+Authorization: Bearer <token>
+Content-Type: application/json

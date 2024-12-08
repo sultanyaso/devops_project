@@ -1,11 +1,11 @@
-import express from 'express';
-import cors from 'cors';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import authRoutes from './src/routes/auth.js';
-import userRoutes from './src/routes/users.js';
-import coachRoutes from './src/routes/coaches.js';
-import adminRoutes from './src/routes/admin.js';
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import authRoutes from "./src/routes/auth.js";
+import userRoutes from "./src/routes/users.js";
+import coachRoutes from "./src/routes/coaches.js";
+import adminRoutes from "./src/routes/admin.js";
 
 dotenv.config();
 
@@ -16,28 +16,28 @@ app.use(cors());
 app.use(express.json());
 
 // Database connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/your_database_name';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 try {
   await mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  console.log('MongoDB connected successfully');
+  console.log("MongoDB connected successfully");
 } catch (error) {
-  console.error('MongoDB connection error:', error);
+  console.error("MongoDB connection error:", error);
 }
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/coaches', coachRoutes);
-app.use('/api/admin', adminRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/coaches", coachRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  res.status(500).json({ message: "Something went wrong!" });
 });
 
 const PORT = process.env.PORT || 5000;
