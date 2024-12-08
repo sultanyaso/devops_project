@@ -33,30 +33,11 @@ export default function StudentDashboard() {
     const loadData = async () => {
       try {
         setError(null);
-        // const linkedInStatus = await isLinkedInConnected();
-        // setIsLinkedIn(linkedInStatus);
-
-        // const [userSessions, stats, profileData] = await Promise.all([
-        //   sessionService.getSessionsByUser(user?.id, "student"),
-        //   linkedInStatus ? getNetworkStats() : null,
-        //   linkedInStatus ? getProfileData() : null,
-        // ]);
-
-        // setSessions(userSessions || []);
-        // setNetworkStats(stats);
-        // if (profileData) {
-        //   setLinkedInUser({
-        //     name: `${profileData.given_name.localized.en_US} ${profileData.family_name.localized.en_US}`,
-        //     email: profileData.email,
-        //   });
-        // }
-
-        const sessions = await sessionService.getSessionsByUser(user?.id, "student");
+        const sessions = await sessionService.getSessionsByUser(
+          user?.id,
+          "student"
+        );
         setSessions(sessions || []);
-
-
-
-
       } catch (error) {
         console.error("Error loading dashboard data:", error);
         setError("Failed to load some dashboard data. Please try refreshing.");
@@ -77,11 +58,16 @@ export default function StudentDashboard() {
         student: {
           id: user.id,
           name: user.given_name + " " + user.family_name,
-          imageUrl: user.profilePicture || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+          imageUrl:
+            user.profilePicture ||
+            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
         },
       });
       setSelectedCoach(null);
-      const updatedSessions = await sessionService.getSessionsByUser(user.id, "student");
+      const updatedSessions = await sessionService.getSessionsByUser(
+        user.id,
+        "student"
+      );
       setSessions(updatedSessions);
     } catch (error) {
       console.error("Error scheduling session:", error);
@@ -91,27 +77,27 @@ export default function StudentDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      <div className="min-h-screen flex items-center justify-center bg-black">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm">
+    <div className="min-h-screen bg-black text-white">
+      <nav className="bg-gray-900 border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
-              <h1 className="text-xl font-bold text-gray-900">
+              <h1 className="text-xl font-bold text-white">
                 Student Dashboard
               </h1>
             </div>
             <div className="flex items-center space-x-4">
-              <span className="text-gray-700">{user?.email}</span>
+              <span className="text-gray-300">{user?.email}</span>
               <button
                 onClick={logout}
-                className="flex items-center space-x-2 text-gray-700 hover:text-gray-900"
+                className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors"
               >
                 <LogOut className="h-5 w-5" />
                 <span>Logout</span>
@@ -123,7 +109,7 @@ export default function StudentDashboard() {
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {error && (
-          <div className="mb-4 bg-red-50 border-l-4 border-red-400 p-4">
+          <div className="mb-4 bg-red-900 border-l-4 border-red-500 p-4">
             <div className="flex">
               <div className="flex-shrink-0">
                 <svg
@@ -139,7 +125,7 @@ export default function StudentDashboard() {
                 </svg>
               </div>
               <div className="ml-3">
-                <p className="text-sm text-red-700">{error}</p>
+                <p className="text-sm text-red-300">{error}</p>
               </div>
             </div>
           </div>
@@ -171,24 +157,20 @@ export default function StudentDashboard() {
         </div>
 
         <div className="mt-8">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">
+          <h2 className="text-lg font-medium text-white mb-4">
             Upcoming Sessions
           </h2>
           <SessionsList sessions={sessions} />
         </div>
 
         {showPostGenerator && (
-          <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 backdrop-blur-sm">
             <div className="flex min-h-screen items-center justify-center p-4">
-              <div
-                className="fixed inset-0 bg-black bg-opacity-25"
-                onClick={() => setShowPostGenerator(false)}
-              />
-              <div className="relative w-full max-w-2xl">
+              <div className="relative w-full max-w-2xl bg-gray-900 rounded-lg shadow-xl">
                 <PostGenerator />
                 <button
                   onClick={() => setShowPostGenerator(false)}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-500"
+                  className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                 >
                   <LogOut className="h-6 w-6" />
                 </button>
@@ -198,17 +180,13 @@ export default function StudentDashboard() {
         )}
 
         {showCoachList && !selectedCoach && (
-          <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 backdrop-blur-sm">
             <div className="flex min-h-screen items-center justify-center p-4">
-              <div
-                className="fixed inset-0 bg-black bg-opacity-25"
-                onClick={() => setShowCoachList(false)}
-              />
-              <div className="relative w-full max-w-2xl bg-white rounded-lg shadow-xl p-6">
+              <div className="relative w-full max-w-2xl bg-gray-900 rounded-lg shadow-xl p-6">
                 <CoachList onSelectCoach={setSelectedCoach} />
                 <button
                   onClick={() => setShowCoachList(false)}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-gray-500"
+                  className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
                 >
                   <LogOut className="h-6 w-6" />
                 </button>
@@ -218,13 +196,9 @@ export default function StudentDashboard() {
         )}
 
         {selectedCoach && (
-          <div className="fixed inset-0 z-50 overflow-y-auto">
+          <div className="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 backdrop-blur-sm">
             <div className="flex min-h-screen items-center justify-center p-4">
-              <div
-                className="fixed inset-0 bg-black bg-opacity-25"
-                onClick={() => setSelectedCoach(null)}
-              />
-              <div className="relative w-full max-w-2xl">
+              <div className="relative w-full max-w-2xl bg-gray-900 rounded-lg shadow-xl">
                 <SessionScheduler
                   coach={selectedCoach}
                   onSchedule={handleScheduleSession}

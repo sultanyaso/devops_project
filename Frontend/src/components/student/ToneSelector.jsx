@@ -1,30 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { MessageCircle, Briefcase, Zap, Users } from 'lucide-react';
+import React from "react";
+import PropTypes from "prop-types";
+import { MessageCircle, Briefcase, Zap, Users } from "lucide-react";
 
 const tones = [
   {
-    id: 'professional',
-    name: 'Professional',
-    description: 'Formal and business-oriented',
+    id: "professional",
+    name: "Professional",
+    description: "Formal and business-oriented",
     icon: Briefcase,
   },
   {
-    id: 'casual',
-    name: 'Casual',
-    description: 'Friendly and approachable',
+    id: "casual",
+    name: "Casual",
+    description: "Friendly and approachable",
     icon: MessageCircle,
   },
   {
-    id: 'enthusiastic',
-    name: 'Enthusiastic',
-    description: 'Energetic and inspiring',
+    id: "enthusiastic",
+    name: "Enthusiastic",
+    description: "Energetic and inspiring",
     icon: Zap,
   },
   {
-    id: 'storytelling',
-    name: 'Storytelling',
-    description: 'Narrative and engaging',
+    id: "storytelling",
+    name: "Storytelling",
+    description: "Narrative and engaging",
     icon: Users,
   },
 ];
@@ -44,16 +44,20 @@ export default function ToneSelector({ selected, onSelect }) {
               onClick={() => onSelect(tone.id)}
               className={`flex items-center p-3 rounded-lg border ${
                 selected === tone.id
-                  ? 'border-indigo-600 bg-indigo-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? "border-indigo-600 bg-indigo-800"
+                  : "border-gray-500 hover:border-gray-300"
               }`}
             >
-              <Icon className={`h-5 w-5 ${
-                selected === tone.id ? 'text-indigo-600' : 'text-gray-400'
-              }`} />
+              <Icon
+                className={`h-5 w-5 ${
+                  selected === tone.id ? "text-indigo-600" : "text-gray-400"
+                }`}
+              />
               <div className="ml-3 text-left">
-                <h3 className="text-sm font-medium text-gray-900">{tone.name}</h3>
-                <p className="text-xs text-gray-500">{tone.description}</p>
+                <h3 className="text-sm font-medium text-gray-300">
+                  {tone.name}
+                </h3>
+                <p className="text-xs text-gray-400">{tone.description}</p>
               </div>
             </button>
           );

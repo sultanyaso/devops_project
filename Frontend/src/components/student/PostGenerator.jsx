@@ -45,15 +45,15 @@ export default function PostGenerator() {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-900 rounded-lg shadow-lg p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Generate LinkedIn Post</h2>
-        <Bot className="h-6 w-6 text-indigo-600" />
+        <h2 className="text-2xl font-bold text-white">Generate LinkedIn Post</h2>
+        <Bot className="h-6 w-6 text-blue-400" />
       </div>
 
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-300 mb-2">
             What would you like to post about?
           </label>
           <input
@@ -61,7 +61,7 @@ export default function PostGenerator() {
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
             placeholder="E.g., Recent project completion, New certification..."
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:ring-blue-500 focus:border-blue-500 text-white placeholder-gray-400"
           />
         </div>
 
@@ -76,7 +76,7 @@ export default function PostGenerator() {
         />
 
         {error && (
-          <div className="text-red-600 text-sm">
+          <div className="text-red-400 text-sm">
             {error}
           </div>
         )}
@@ -84,7 +84,7 @@ export default function PostGenerator() {
         <button
           onClick={handleGenerate}
           disabled={!topic || isGenerating}
-          className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+          className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isGenerating ? (
             <>
@@ -102,10 +102,10 @@ export default function PostGenerator() {
         {generatedContent && (
           <div className="mt-6">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-lg font-medium text-gray-900">Generated Post</h3>
+              <h3 className="text-lg font-medium text-white">Generated Post</h3>
               <button
                 onClick={handleCopy}
-                className="flex items-center space-x-2 text-indigo-600 hover:text-indigo-500"
+                className="flex items-center space-x-2 text-blue-400 hover:text-blue-300"
               >
                 {copied ? (
                   <Check className="h-5 w-5" />
@@ -115,14 +115,14 @@ export default function PostGenerator() {
                 <span>{copied ? 'Copied!' : 'Copy'}</span>
               </button>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <p className="whitespace-pre-wrap text-gray-800">{generatedContent}</p>
+            <div className="bg-gray-800 rounded-lg p-4">
+              <p className="whitespace-pre-wrap text-gray-300">{generatedContent}</p>
               {hashtags.length > 0 && (
                 <div className="mt-4 flex flex-wrap gap-2">
                   {hashtags.map((hashtag, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800"
+                      className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-900 text-blue-200"
                     >
                       {hashtag}
                     </span>
