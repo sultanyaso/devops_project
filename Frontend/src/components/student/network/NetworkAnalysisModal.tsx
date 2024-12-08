@@ -3,7 +3,7 @@ import { X, Users, Building, Briefcase, TrendingUp, Share2, UserPlus } from 'luc
 import ConnectionsGraph from './ConnectionsGraph';
 import IndustryDistribution from './IndustryDistribution';
 import GrowthMetrics from './GrowthMetrics';
-import { useNetworkAnalytics } from '../../hooks/useNetworkAnalytics';
+import { useNetworkAnalytics } from '../../../hooks/useNetworkAnalytics';
 
 interface NetworkAnalysisModalProps {
   isOpen: boolean;

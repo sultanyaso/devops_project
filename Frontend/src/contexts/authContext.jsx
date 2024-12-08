@@ -39,6 +39,18 @@ export function AuthProvider({ children }) {
     }
   };
 
+  const signup = async (name, email, password, role) => {
+    try {
+      const { user, token } = await authService.signup(name, email, password, role);
+      saveUserSession({ token, userId: user._id });
+      setUser(user);
+      navigate(`/${role}-dashboard`);
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Signup failed');
+    }
+  };
+
+
   const loginWithLinkedIn = async (code) => {
     try {
       const { accessToken } = await authService.exchangeLinkedInCode(code);
@@ -74,6 +86,7 @@ export function AuthProvider({ children }) {
     <AuthContext.Provider value={{ 
       user,
       login,
+      signup,
       loginWithLinkedIn,
       logout,
       isAuthenticated: !!user 

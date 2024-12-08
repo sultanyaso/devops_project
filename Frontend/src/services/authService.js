@@ -13,22 +13,27 @@ export const authService = {
   },
 
   login: async (email, password) => {
-    const response = await axios.post(`${API_URL}/login`, { email, password });
+    console.log("lasjdlsajd", API_URL);
+    const response = await axios.post(`${API_URL}/api/auth/login`, { email, password });
     return response.data;
   },
 
-  signup: async (email, password) => {
-    const response = await axios.post(`${API_URL}/signup`, { email, password });
+  signup: async (name, email, password, role) => {
+    console.log(name,
+      email,
+      password,
+      role);
+    const response = await axios.post(`${API_URL}/api/auth/register`, { name, email, password, role });
     return response.data;
   },
 
   exchangeLinkedInCode: async (code) => {
-    const response = await axios.post(`${API_URL}/linkedin/token`, { code });
+    const response = await axios.post(`${API_URL}/api/auth/linkedin/token`, { code });
     return response.data;
   },
 
   getLinkedInUser: async (accessToken) => {
-    const response = await axios.get(`${LINKEDIN_API}/userinfo`, {
+    const response = await axios.get(`${LINKEDIN_API}/api/auth/userinfo`, {
       headers: { Authorization: `Bearer ${accessToken}` }
     });
     return response.data;

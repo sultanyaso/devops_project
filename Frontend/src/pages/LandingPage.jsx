@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import Features from "../components/Features";
-import Footer from "../components/Footer";
+import Navbar from "../components/landing/Navbar";
+import Hero from "../components/landing/Hero";
+import Features from "../components/landing/Features";
+import Footer from "../components/landing/Footer";
 import AuthModal from "../components/auth/AuthModal";
 import { AuthProvider } from "../contexts/authContext";
 
