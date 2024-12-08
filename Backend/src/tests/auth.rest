@@ -44,6 +44,9 @@ Content-Type: application/json
 GET http://localhost:5000/api/auth/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzMTFlNmRjNDA1NTdiZjU1YjEiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTczMzY1MTUxNywiZXhwIjoxNzMzNzM3OTE3fQ.o2_2yBB2tqtGFIaFQG-euZXSIARxPt-zC4CIoh907vQ
 
-### LinkedIn OAuth Callback
-# Simulating LinkedIn OAuth callback
-GET http://localhost:3000/api/linkedin/callback
+### LinkedIn Exchange Code for Token
+POST http://localhost:5000/api/auth/linkedin/token
+Content-Type: application/json
+{
+  "code": "AQQo9fjYwFZJWhmRhvLYuuBImptoA_lJsXglm7B5s1l_CfMsS2gC3PwRxRlr1h7bb4d-KxZsEWlLipaY3-drWpUNp_qJTE-WZFgfReQvfaUm0VBdCqpsFhgeh9XdkRbqWpqv3ArztAMFD7hi82IYrqv8v526dBGddL0Mgtlai0y4OK4KSPXy1x2OF2b_qiINvbtD5TuvjXmMWnm4S1c"
+}

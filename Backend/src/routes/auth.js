@@ -1,5 +1,6 @@
 import express from "express";
 import jwt from "jsonwebtoken";
+import axios from "axios";
 import User from "../models/User.js";
 import { authenticateToken } from "../middleware/auth.js";
 
@@ -74,13 +75,26 @@ router.get("/linkedin/token", async (req, res) => {
       return res.status(400).json({ message: "Invalid code" });
     }
 
-    const response = await fetch(
-      `https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=${code}&redirect_uri=${process.env.LINKEDIN_REDIRECT_URI}&client_id=${process.env.LINKEDIN_CLIENT_ID}&client_secret=${process.env.LINKEDIN_CLIENT_SECRET}`
-    );
-    const data = await response.json();
+    // LinkedIn API endpoint for exchanging code for an access token
+    const linkedInTokenUrl = "https://www.linkedin.com/oauth/v2/accessToken";
 
+    // Required parameters for the POST request
+    const params = new URLSearchParams();
+    params.append("grant_type", "authorization_code");
+    params.append("code", code);
+    params.append("client_id", process.env.LINKEDIN_CLIENT_ID);
+    params.append("client_secret", process.env.LINKEDIN_CLIENT_SECRET);
+    params.append("redirect_uri", process.env.LINKEDIN_REDIRECT_URI);
+
+    // Make the POST request
+    const { data } = await axios.post(linkedInTokenUrl, params.toString(), {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+
+    // Return the response from LinkedIn
     res.json(data);
   } catch (error) {
+    console.error("Error exchanging code for token:", error?.response?.data || error.message);
     res.status(500).json({ message: "Error exchanging code for token" });
   }
 });
