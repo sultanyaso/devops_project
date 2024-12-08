@@ -3,12 +3,12 @@ POST http://localhost:5000/api/sessions/create
 Content-Type: application/json
 
 {
-  "title": "Session with Coach Ubaid",
+  "title": "Session with Coach Daddy",
   "date": "2024-12-15T10:00:00Z",
-  "time": "10:00 AM",
+  "time": "11:00 AM",
   "duration": 60,
-  "coachUserId": "675585b538da439b04294109",
-  "studentUserId": "675576a0defbd53afcf4d31d"
+  "coachUserId": "67558917defbd53afcf4d32c",
+  "studentUserId": "675583b8defbd53afcf4d326"
 }
 
 ###
