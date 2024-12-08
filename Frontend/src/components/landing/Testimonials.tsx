@@ -1,11 +1,9 @@
-import React from "react";
-
 const testimonials = [
   {
     name: "Sarah Chen",
     role: "Software Engineer at Google",
     quote:
-      "CareerLaunch AI helped me optimize my LinkedIn presence and connect with the right people. Within months, I landed my dream job!",
+      "LEAP AI helped me optimize my LinkedIn presence and connect with the right people. Within months, I landed my dream job!",
     image:
       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
@@ -29,7 +27,7 @@ const testimonials = [
     name: "David Kim",
     role: "Data Scientist at Amazon",
     quote:
-      "CareerLaunch is a must-have for anyone serious about their career. The AI-driven insights are unmatched.",
+      "LEAP is a must-have for anyone serious about their career. The AI-driven insights are unmatched.",
     image:
       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
@@ -37,7 +35,7 @@ const testimonials = [
     name: "Samantha Lee",
     role: "UX Designer at Apple",
     quote:
-      "I've always struggled with networking, but CareerLaunch made it easy. The personalized suggestions are spot-on.",
+      "I've always struggled with networking, but LEAP made it easy. The personalized suggestions are spot-on.",
     image:
       "https://images.unsplash.com/photo-1637766652059-af65a50715eb?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
   },
