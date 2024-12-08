@@ -1,0 +1,27 @@
+### Get All Coaches
+GET http://localhost:5000/api/coaches
+Content-Type: application/json
+
+### Get Coach by ID
+# Replace <coachId> with a valid coach ID
+GET http://localhost:5000/api/coaches/<coachId>
+Content-Type: application/json
+
+### Update Coach Profile
+# Replace <token> with a valid JWT token (coach or admin)
+# Replace <coachId> with the coach's ID
+PUT http://localhost:5000/api/coaches/<coachId>
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "name": "Updated Coach Name",
+  "email": "updatedcoach@example.com",
+  "profilePicture": "https://example.com/profile.jpg"
+}
+
+### Delete Coach
+# Replace <token> with a valid admin JWT token
+# Replace <coachId> with the coach's ID
+DELETE http://localhost:5000/api/coaches/<coachId>
+Authorization: Bearer <token>

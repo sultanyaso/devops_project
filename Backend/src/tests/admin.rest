@@ -1,0 +1,32 @@
+### Get All Users (Admin Only)
+# Replace <token> with a valid admin JWT token
+GET http://localhost:5000/api/users
+Authorization: Bearer <token>
+
+### Update User Status (Admin Only)
+# Replace <token> with a valid admin JWT token
+# Replace <userId> with the actual user ID
+PATCH http://localhost:5000/api/users/<userId>/status
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "status": "active"
+}
+
+### Update User Role (Admin Only)
+# Replace <token> with a valid admin JWT token
+# Replace <userId> with the actual user ID
+PATCH http://localhost:5000/api/users/<userId>/role
+Authorization: Bearer <token>
+Content-Type: application/json
+
+{
+  "role": "coach"
+}
+
+### Delete User (Admin Only)
+# Replace <token> with a valid admin JWT token
+# Replace <userId> with the actual user ID
+DELETE http://localhost:5000/api/users/<userId>
+Authorization: Bearer <token>
