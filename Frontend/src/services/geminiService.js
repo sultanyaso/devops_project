@@ -8,39 +8,48 @@ The post should follow this template style: ${template}.
 Include 3-4 key points or highlights.
 Make it engaging and encourage interaction.
 Keep it professional and authentic.
-Maximum length: 300 words.`;
+Maximum length: 300 words.
+Humanize the content and make it relatable.
+Donot include any sensitive or confidential information.
+Donot add emojis`;
 };
 
 export const generatePostContent = async (topic, template, tone) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = await genAI.getGenerativeModel({ model: "gemini-pro" });
     const prompt = generatePrompt(topic, template, tone);
-    
+
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    
+    const text = result.response?.text ?? "";
+
+    if (!text) throw new Error("No response text received");
     return text;
   } catch (error) {
-    console.error('Error generating post:', error);
-    throw new Error('Failed to generate post content');
+    console.error("Error generating post:", error.message || error);
+    throw new Error("Failed to generate post content");
   }
 };
 
 export const generateHashtags = async (topic) => {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = await genAI.getGenerativeModel({ model: "gemini-pro" });
     const prompt = `Generate 5 relevant professional hashtags for a LinkedIn post about "${topic}".
 Make them specific and trending.
 Format: Return only the hashtags, separated by spaces, without numbering or bullets.`;
-    
+
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    
-    return text.split(' ').filter(tag => tag.startsWith('#'));
+    const text = result.response?.text();
+
+    if (!text) throw new Error("No response text received");
+
+    // Ensure we're working with a string
+    const hashtagString = String(text).trim();
+
+    return hashtagString
+      .split(/\s+/)
+      .filter((tag) => tag.startsWith("#") && tag.length > 1);
   } catch (error) {
-    console.error('Error generating hashtags:', error);
-    throw new Error('Failed to generate hashtags');
+    console.error("Error generating hashtags:", error.message || error);
+    throw new Error("Failed to generate hashtags");
   }
 };

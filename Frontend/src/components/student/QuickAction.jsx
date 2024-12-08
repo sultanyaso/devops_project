@@ -8,12 +8,12 @@ export default function QuickAction({ title, description, icon: Icon, onClick })
       className="relative block w-full rounded-lg border-2 border-dashed border-gray-300 p-6 text-left hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
     >
       <div>
-        <span className="inline-flex items-center justify-center rounded-md bg-gray-50 p-3">
-          <Icon className="h-6 w-6 text-gray-700" />
+        <span className="inline-flex items-center justify-center rounded-md bg-gray-800 p-3">
+          <Icon className="h-6 w-6 text-gray-200" />
         </span>
         <div className="mt-4">
-          <h3 className="text-lg font-medium text-gray-900">{title}</h3>
-          <p className="mt-1 text-sm text-gray-500">{description}</p>
+          <h3 className="text-lg font-medium text-gray-200">{title}</h3>
+          <p className="mt-1 text-sm text-gray-300">{description}</p>
         </div>
       </div>
     </button>

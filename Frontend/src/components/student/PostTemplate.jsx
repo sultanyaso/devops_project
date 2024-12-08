@@ -32,7 +32,7 @@ const templates = [
 export default function PostTemplate({ selected, onSelect }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700 mb-2">
+      <label className="block text-sm font-medium text-gray-200 mb-2">
         Choose a template
       </label>
       <div className="grid grid-cols-2 gap-4">
@@ -44,15 +44,15 @@ export default function PostTemplate({ selected, onSelect }) {
               onClick={() => onSelect(template.id)}
               className={`flex flex-col items-center p-4 rounded-lg border-2 ${
                 selected === template.id
-                  ? 'border-indigo-600 bg-indigo-50'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-indigo-600 bg-indigo-800'
+                  : 'border-gray-500 hover:border-gray-300'
               }`}
             >
               <Icon className={`h-6 w-6 ${
                 selected === template.id ? 'text-indigo-600' : 'text-gray-400'
               }`} />
-              <h3 className="mt-2 font-medium text-gray-900">{template.name}</h3>
-              <p className="mt-1 text-xs text-gray-500">{template.description}</p>
+              <h3 className="mt-2 font-medium text-gray-300">{template.name}</h3>
+              <p className="mt-1 text-xs text-gray-400">{template.description}</p>
             </button>
           );
         })}
