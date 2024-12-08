@@ -6,6 +6,7 @@ import authRoutes from "./src/routes/auth.js";
 import userRoutes from "./src/routes/users.js";
 import coachRoutes from "./src/routes/coaches.js";
 import adminRoutes from "./src/routes/admin.js";
+import sessionsRoutes from "./src/routes/sessions.js";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/coaches", coachRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/sessions", sessionsRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

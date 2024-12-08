@@ -1,13 +1,13 @@
 ### Get All Users (Admin Only)
 # Replace <token> with a valid admin JWT token
-GET http://localhost:5000/api/users
-Authorization: Bearer <token>
+GET http://localhost:5000/api/admin/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM2NTMyODMsImV4cCI6MTczMzczOTY4M30.MzJiw5kjGkC0YJOYSBrUTzd0RvFIIxxpG0ZWim1pE1M
 
 ### Update User Status (Admin Only)
 # Replace <token> with a valid admin JWT token
 # Replace <userId> with the actual user ID
-PATCH http://localhost:5000/api/users/<userId>/status
-Authorization: Bearer <token>
+PATCH http://localhost:5000/api/admin/users/67556c311e6dc40557bf55b1/status
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM2NTMyODMsImV4cCI6MTczMzczOTY4M30.MzJiw5kjGkC0YJOYSBrUTzd0RvFIIxxpG0ZWim1pE1M
 Content-Type: application/json
 
 {
@@ -17,16 +17,16 @@ Content-Type: application/json
 ### Update User Role (Admin Only)
 # Replace <token> with a valid admin JWT token
 # Replace <userId> with the actual user ID
-PATCH http://localhost:5000/api/users/<userId>/role
-Authorization: Bearer <token>
+PATCH http://localhost:5000/api/admin/users/67556c311e6dc40557bf55b1/role
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM2NTMyODMsImV4cCI6MTczMzczOTY4M30.MzJiw5kjGkC0YJOYSBrUTzd0RvFIIxxpG0ZWim1pE1M
 Content-Type: application/json
 
 {
-  "role": "coach"
+  "role": "student"
 }
 
 ### Delete User (Admin Only)
 # Replace <token> with a valid admin JWT token
 # Replace <userId> with the actual user ID
-DELETE http://localhost:5000/api/users/<userId>
-Authorization: Bearer <token>
+DELETE http://localhost:5000/api/admin/users/67556c311e6dc40557bf55b1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM2NTMyODMsImV4cCI6MTczMzczOTY4M30.MzJiw5kjGkC0YJOYSBrUTzd0RvFIIxxpG0ZWim1pE1M
