@@ -42,7 +42,7 @@ export const sessionService = {
 
   getSessionsByUser: async (userId, role) => {
     try {
-      const response = await axios.get(`${API_URL}/api/sessions/user/${userId}?role=${role}`, {
+      const response = await axios.get(`${API_URL}/api/sessions/${student}/${userId}`, {
         headers: { Authorization: `Bearer ${getToken()}` }
       });
       return response.data;

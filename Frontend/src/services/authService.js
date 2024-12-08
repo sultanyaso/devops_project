@@ -13,7 +13,6 @@ export const authService = {
   },
 
   login: async (email, password) => {
-    console.log("lasjdlsajd", API_URL);
     const response = await axios.post(`${API_URL}/api/auth/login`, { email, password });
     return response.data;
   },
@@ -27,14 +26,16 @@ export const authService = {
     return response.data;
   },
 
-  exchangeLinkedInCode: async (code) => {
-    const response = await axios.post(`${API_URL}/api/auth/linkedin/token`, { code });
-    return response.data;
-  },
-
   getLinkedInUser: async (accessToken) => {
     const response = await axios.get(`${LINKEDIN_API}/api/auth/userinfo`, {
       headers: { Authorization: `Bearer ${accessToken}` }
+    });
+    return response.data;
+  },
+
+  getLinkedInToken: async (code) => {
+  const response = await axios.get(`${API_URL}/api/auth/linkedin/token`, {
+    params: { code }
     });
     return response.data;
   }
