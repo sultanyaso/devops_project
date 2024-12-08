@@ -65,9 +65,24 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// LinkedIn OAuth callback
-router.get("/linkedin/callback", async (req, res) => {
-  // Implement LinkedIn OAuth logic here
+// LinkedIn exchange code for token
+router.get("/linkedin/token", async (req, res) => {
+  try {
+    const { code } = req.query;
+
+    if (!code) {
+      return res.status(400).json({ message: "Invalid code" });
+    }
+
+    const response = await fetch(
+      `https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=${code}&redirect_uri=${process.env.LINKEDIN_REDIRECT_URI}&client_id=${process.env.LINKEDIN_CLIENT_ID}&client_secret=${process.env.LINKEDIN_CLIENT_SECRET}`
+    );
+    const data = await response.json();
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: "Error exchanging code for token" });
+  }
 });
 
 // Get current user
