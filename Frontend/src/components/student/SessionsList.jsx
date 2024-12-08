@@ -6,7 +6,7 @@ import { format } from "date-fns";
 export default function SessionsList({ sessions }) {
   if (!sessions.length) {
     return (
-      <div className="text-center py-8 bg-gray-900 rounded-lg">
+      <div className="text-center py-8 bg-gray-950 rounded-lg">
         <p className="text-gray-300">No scheduled sessions yet.</p>
       </div>
     );
@@ -15,7 +15,7 @@ export default function SessionsList({ sessions }) {
   return (
     <div className="space-y-4">
       {sessions.map((session) => (
-        <div key={session.id} className="bg-white rounded-lg shadow p-4">
+        <div key={session.id} className="bg-gray-950 rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               {/* <div className="flex-shrink-0">
@@ -26,7 +26,7 @@ export default function SessionsList({ sessions }) {
                 />
               </div> */}
               <div>
-                <h3 className="text-lg font-medium text-gray-900">
+                <h3 className="text-lg font-medium text-gray-950">
                   {session.coachUserId.name}
                 </h3>
                 <p className="text-sm text-gray-300">{session.title}</p>
