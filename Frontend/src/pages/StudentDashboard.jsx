@@ -9,7 +9,7 @@ import NetworkStats from "../components/student/NetworkStats";
 import NetworkAnalysisModal from "../components/student/network/NetworkAnalysisModal";
 import LinkedInPrompt from "../components/student/LinkedInPrompt";
 import QuickAction from "../components/student/QuickAction";
-import { scheduleSession, getSessionsByUser } from "../services/sessionService";
+import sessionService from "../services/sessionService";
 import {
   getNetworkStats,
   isLinkedInConnected,

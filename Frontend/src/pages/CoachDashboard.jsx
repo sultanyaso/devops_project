@@ -4,7 +4,7 @@ import { Users, MessageSquare, LineChart, Calendar, LogOut, Award } from 'lucide
 import ScheduleView from '../components/coach/ScheduleView';
 import ClientProgress from '../components/coach/ClientProgress';
 import ResourceLibrary from '../components/coach/ResourceLibrary';
-import { getSessionsByUser } from '../services/sessionService';
+import SessionService from '../services/sessionService';
 
 function StatCard({ title, value, change, icon: Icon }) {
   return (

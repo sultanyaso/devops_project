@@ -27,13 +27,22 @@ export default function SessionScheduler({ coach, onSchedule, onClose }) {
     setError(null);
 
     try {
+
+      //  const session = new Sessions({
+      //       title,
+      //       date,
+      //       time,
+      //       duration,
+      //       coachUserId,
+      //       studentUserId,
+      //     });
       const sessionData = {
         title: topic,
         date: selectedDate.toISOString().split("T")[0],
         time: selectedTime,
         duration: 60, // Default duration in minutes
         coachUserId: coach.id,
-        // studentUserId: localStorage.getItem("userId"), // Assuming user ID is stored in localStorage
+        studentUserId: localStorage.getItem("userId"),
       };
 
       const response = await sessionService.createSession(sessionData);
