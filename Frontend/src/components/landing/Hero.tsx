@@ -7,46 +7,47 @@ interface HeroProps {
 
 export default function Hero({ onGetStarted }: HeroProps) {
   return (
-    <div className="relative overflow-hidden bg-white">
-      <div className="max-w-7xl mx-auto">
-        <div className="relative z-10 pb-8 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
-          <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-            <div className="sm:text-center lg:text-left">
-              <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                <span className="block">Accelerate Your Career with</span>
-                <span className="block text-indigo-600">AI-Powered LinkedIn Growth</span>
-              </h1>
-              <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                Transform your LinkedIn presence with AI-driven content generation, smart networking, and career growth analytics. Stand out from the crowd and reach your professional goals faster.
-              </p>
-              <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                <div className="rounded-md shadow">
-                  <button
-                    onClick={onGetStarted}
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                  >
-                    Get started
-                  </button>
-                </div>
-                <div className="mt-3 sm:mt-0 sm:ml-3">
-                  <a
-                    href="#features"
-                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 md:py-4 md:text-lg md:px-10"
-                  >
-                    Learn more
-                  </a>
-                </div>
-              </div>
-            </div>
-          </main>
+    <div className="relative min-h-screen bg-black overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-green-500/20 opacity-30" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent opacity-40" />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16">
+        <div className="text-center max-w-3xl mx-auto">
+          <h1 className="text-4xl sm:text-6xl font-bold text-white mb-8">
+          Accelerate Your Career with AI-Powered LinkedIn Growth
+          </h1>
+          <p className="text-lg sm:text-xl text-white/80 mb-12">
+          Transform your LinkedIn presence with AI-driven content generation, smart networking, and career growth analytics. Stand out from the crowd and reach your professional goals faster.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={onGetStarted}
+              className="px-8 py-3 bg-white text-black rounded-lg hover:bg-white/90 transition-colors"
+            >
+              Get started
+            </button>
+            <button
+              onClick={() => window.location.href = '#features'}
+              className="px-8 py-3 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors"
+            >
+              Discover More
+            </button>
+          </div>
         </div>
       </div>
-      <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-        <img
-          className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-          src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2850&q=80"
-          alt="Team working on analytics"
-        />
+
+      {/* Partner logos */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" className="h-8 opacity-50 hover:opacity-75 transition-opacity" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft" className="h-8 opacity-50 hover:opacity-75 transition-opacity" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" className="h-8 opacity-50 hover:opacity-75 transition-opacity" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram" className="h-8 opacity-50 hover:opacity-75 transition-opacity" />
+
+        </div>
       </div>
     </div>
   );

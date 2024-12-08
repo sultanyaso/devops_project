@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/landing/Navbar";
 import Hero from "../components/landing/Hero";
 import Features from "../components/landing/Features";
+import Testimonials from "../components/landing/Testimonials";
 import Footer from "../components/landing/Footer";
 import AuthModal from "../components/auth/AuthModal";
 import { AuthProvider } from "../contexts/authContext";
@@ -36,81 +37,10 @@ export default function LandingPage() {
         <div className="relative pt-16">
           <Hero onGetStarted={handleGetStarted} />
 
-          {/* Social Proof Section */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl p-8">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl font-semibold text-gray-900">
-                  Trusted by professionals from
-                </h2>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg"
-                  alt="IBM"
-                  className="h-8 opacity-50 hover:opacity-75 transition-opacity"
-                />
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg"
-                  alt="Microsoft"
-                  className="h-8 opacity-50 hover:opacity-75 transition-opacity"
-                />
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg"
-                  alt="Google"
-                  className="h-8 opacity-50 hover:opacity-75 transition-opacity"
-                />
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
-                  alt="Meta"
-                  className="h-8 opacity-50 hover:opacity-75 transition-opacity"
-                />
-              </div>
-            </div>
-          </div>
-
           <Features />
 
-          {/* Testimonials Section */}
-          <div className="bg-white py-16">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-gray-900">
-                  What our users say
-                </h2>
-                <p className="mt-4 text-lg text-gray-600">
-                  Join thousands of professionals who've transformed their
-                  careers
-                </p>
-              </div>
+          <Testimonials />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {testimonials.map((testimonial, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-50 rounded-2xl p-6 shadow-sm"
-                  >
-                    <div className="flex items-center mb-4">
-                      <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        className="h-12 w-12 rounded-full"
-                      />
-                      <div className="ml-4">
-                        <h4 className="font-medium text-gray-900">
-                          {testimonial.name}
-                        </h4>
-                        <p className="text-sm text-gray-500">
-                          {testimonial.role}
-                        </p>
-                      </div>
-                    </div>
-                    <p className="text-gray-600">{testimonial.quote}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
