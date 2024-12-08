@@ -37,7 +37,7 @@ export default function Navbar({ onAuthClick }: NavbarProps) {
                 onClick={onAuthClick}
                 className="bg-white/10 text-white px-4 py-2 rounded-lg hover:bg-white/20 transition-colors"
               >
-                Create Account
+                Log In
               </button>
             )}
           </div>
