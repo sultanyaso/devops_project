@@ -5,7 +5,7 @@ import { Clock, Calendar, Check, X } from "lucide-react";
 import { sessionService } from "../../services/sessionService";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
+export default function SessionScheduler({ coach, user, onSchedule, onClose }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [topic, setTopic] = useState("");
@@ -27,10 +27,9 @@ export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
     setError(null);
 
     try {
-
       console.log("coach", coach);
       console.log("user", user);
-    
+
       const sessionData = {
         title: topic,
         date: selectedDate.toISOString().split("T")[0],
@@ -52,7 +51,7 @@ export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-950 rounded-lg shadow-lg p-6">
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center space-x-4">
           <img
@@ -61,15 +60,15 @@ export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
             className="h-12 w-12 rounded-full"
           />
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">
+            <h2 className="text-xl font-semibold text-gray-200">
               Schedule with {coach.name}
             </h2>
-            <p className="text-sm text-gray-500">{coach.expertise}</p>
+            <p className="text-sm text-gray-300">{coach.expertise}</p>
           </div>
         </div>
         <button
           onClick={onClose}
-          className="text-gray-400 hover:text-gray-500 p-2 rounded-full hover:bg-gray-100"
+          className="text-gray-300 hover:text-gray-400 p-2 rounded-full hover:bg-gray-100"
         >
           <X className="h-5 w-5" />
         </button>
@@ -77,7 +76,7 @@ export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-300 mb-2">
             <Calendar className="h-4 w-4 inline-block mr-2" />
             Select Date
           </label>
@@ -85,14 +84,14 @@ export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
             selected={selectedDate}
             onChange={setSelectedDate}
             minDate={new Date()}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-3 py-2 border border-gray-900 text-gray-800 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             placeholderText="Select date"
             dateFormat="MMMM d, yyyy"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-300 mb-2">
             <Clock className="h-4 w-4 inline-block mr-2" />
             Available Time Slots
           </label>
@@ -105,7 +104,7 @@ export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
                 className={`px-4 py-2 text-sm rounded-md transition-colors ${
                   selectedTime === time
                     ? "bg-indigo-600 text-white"
-                    : "bg-gray-50 text-gray-700 hover:bg-gray-100"
+                    : "bg-gray-50 text-gray-800 hover:bg-gray-100"
                 }`}
               >
                 {time}
@@ -115,14 +114,14 @@ export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-300 mb-2">
             Session Topic
           </label>
           <textarea
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
             placeholder="What would you like to discuss in this session?"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-3 py-2 border border-gray-300 text-gray-800 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
             rows="3"
           />
         </div>

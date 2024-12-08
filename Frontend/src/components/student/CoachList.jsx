@@ -27,7 +27,7 @@ export default function CoachList({ onSelectCoach }) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-semibold text-gray-900">
+      <h2 className="text-xl font-semibold text-gray-300">
         Select a Career Coach
       </h2>
       <div className="grid gap-4">
@@ -43,16 +43,16 @@ export default function CoachList({ onSelectCoach }) {
                 className="h-12 w-12 rounded-full"
               />
               <div className="flex-1">
-                <h3 className="text-lg font-medium text-gray-900">
+                <h3 className="text-lg font-medium text-gray-950">
                   {coach.name}
                 </h3>
-                <p className="text-sm text-gray-500">{coach.expertise}</p>
+                <p className="text-sm text-gray-600">{coach.expertise}</p>
                 <div className="mt-2 flex items-center space-x-4 text-sm">
                   <span className="flex items-center text-yellow-500">
                     <Star className="h-4 w-4 mr-1" />
                     {coach.rating}
                   </span>
-                  <span className="text-gray-500">
+                  <span className="text-gray-600">
                     {coach.yearsExperience} years experience
                   </span>
                 </div>
