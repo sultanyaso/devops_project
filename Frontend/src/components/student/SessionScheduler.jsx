@@ -1,27 +1,49 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import DatePicker from 'react-datepicker';
-import { Clock, Calendar, Check, X } from 'lucide-react';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import DatePicker from "react-datepicker";
+import { Clock, Calendar, Check, X } from "lucide-react";
+import { sessionService } from "../../services/sessionService";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function SessionScheduler({ coach, onSchedule, onClose }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
-  const [topic, setTopic] = useState('');
+  const [topic, setTopic] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const timeSlots = [
-    '09:00 AM', '10:00 AM', '11:00 AM',
-    '02:00 PM', '03:00 PM', '04:00 PM'
+    "09:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "02:00 PM",
+    "03:00 PM",
+    "04:00 PM",
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSchedule({
-      coach,
-      date: selectedDate,
-      time: selectedTime,
-      topic
-    });
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const sessionData = {
+        title: topic,
+        date: selectedDate.toISOString().split("T")[0],
+        time: selectedTime,
+        duration: 60, // Default duration in minutes
+        coachUserId: coach.id,
+        // studentUserId: localStorage.getItem("userId"), // Assuming user ID is stored in localStorage
+      };
+
+      const response = await sessionService.createSession(sessionData);
+      onSchedule(response);
+      onClose();
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -34,7 +56,9 @@ export default function SessionScheduler({ coach, onSchedule, onClose }) {
             className="h-12 w-12 rounded-full"
           />
           <div>
-            <h2 className="text-xl font-semibold text-gray-900">Schedule with {coach.name}</h2>
+            <h2 className="text-xl font-semibold text-gray-900">
+              Schedule with {coach.name}
+            </h2>
             <p className="text-sm text-gray-500">{coach.expertise}</p>
           </div>
         </div>
@@ -75,8 +99,8 @@ export default function SessionScheduler({ coach, onSchedule, onClose }) {
                 onClick={() => setSelectedTime(time)}
                 className={`px-4 py-2 text-sm rounded-md transition-colors ${
                   selectedTime === time
-                    ? 'bg-indigo-600 text-white'
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
+                    ? "bg-indigo-600 text-white"
+                    : "bg-gray-50 text-gray-700 hover:bg-gray-100"
                 }`}
               >
                 {time}
@@ -100,12 +124,19 @@ export default function SessionScheduler({ coach, onSchedule, onClose }) {
 
         <button
           type="submit"
-          disabled={!selectedDate || !selectedTime || !topic}
+          disabled={!selectedDate || !selectedTime || !topic || isLoading}
           className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-colors"
         >
-          <Check className="h-4 w-4 mr-2" />
-          Confirm Booking
+          {isLoading ? (
+            <span>Scheduling...</span>
+          ) : (
+            <>
+              <Check className="h-4 w-4 mr-2" />
+              Confirm Booking
+            </>
+          )}
         </button>
+        {error && <div className="mt-2 text-red-600 text-sm">{error}</div>}
       </form>
     </div>
   );
