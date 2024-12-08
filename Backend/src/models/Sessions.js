@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const sessionsSchema = new mongoose.Schema(
   {
-    sessionId: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     studentUserId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -33,17 +28,6 @@ const sessionsSchema = new mongoose.Schema(
       type: String,
       enum: ["pending", "confirmed", "completed", "cancelled"],
       default: "pending",
-      required: true,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      required: true,
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now,
-      required: true,
     },
     meetingLink: {
       type: String,
@@ -62,29 +46,19 @@ const sessionsSchema = new mongoose.Schema(
       required: false,
     },
     ratings: {
-      type: Number, // Ratings out of 5
+      type: Number,
       required: false,
     },
   },
   { timestamps: true }
 );
 
-sessionsSchema.pre("save", async function (next) {
-  this.updatedAt = Date.now();
-  next();
-});
-
-sessionsSchema.pre("updateOne", async function (next) {
-  this.updatedAt = Date.now();
-  next();
-});
-
 sessionsSchema.methods.findById = async function (id) {
-  return this.model("Session").findOne({ sessionId: id });
+  return mongoose.model("Sessions").findOne({ _id: id });
 };
 
 sessionsSchema.methods.findByIdAndUpdate = async function (id, update) {
-  return this.model("Session").findOneAndUpdate({ sessionId: id }, update, {
+  return mongoose.model("Sessions").findOneAndUpdate({ _id: id }, update, {
     new: true,
   });
 };
