@@ -9,17 +9,16 @@ export default function CoachList({ onSelectCoach }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchCoaches = async () => {
+    async function fetchCoaches() {
       try {
-        const data = await coachService.getCoaches();
-        setCoaches(data);
+        const response = await coachService.getCoaches();
+        setCoaches(response);
       } catch (err) {
         setError("Failed to load coaches");
       } finally {
         setLoading(false);
       }
-    };
-
+    }
     fetchCoaches();
   }, []);
 

@@ -32,6 +32,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     const loadData = async () => {
       try {
+        console.log("user", user);
         setError(null);
         // const linkedInStatus = await isLinkedInConnected();
         // setIsLinkedIn(linkedInStatus);
@@ -72,14 +73,8 @@ export default function StudentDashboard() {
 
   const handleScheduleSession = async (sessionData) => {
     try {
-      await sessionService.createSession({
-        ...sessionData,
-        student: {
-          id: user.id,
-          name: user.given_name + " " + user.family_name,
-          imageUrl: user.profilePicture || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-        },
-      });
+      console.log("session dataa", sessionData);
+      await sessionService.createSession(sessionData);
       setSelectedCoach(null);
       const updatedSessions = await sessionService.getSessionsByUser(user.id, "student");
       setSessions(updatedSessions);
@@ -227,6 +222,7 @@ export default function StudentDashboard() {
               <div className="relative w-full max-w-2xl">
                 <SessionScheduler
                   coach={selectedCoach}
+                  user={user}
                   onSchedule={handleScheduleSession}
                   onClose={() => setSelectedCoach(null)}
                 />

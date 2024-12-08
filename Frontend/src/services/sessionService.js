@@ -9,10 +9,7 @@ export const sessionService = {
     try {
       const response = await axios.post(
         `${API_URL}/api/sessions/create`,
-        sessionData,
-        {
-          headers: { Authorization: `Bearer ${getToken()}` },
-        }
+        sessionData
       );
       return response.data;
     } catch (error) {
@@ -25,9 +22,7 @@ export const sessionService = {
   // Get all sessions
   getAllSessions: async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/sessions`, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      const response = await axios.get(`${API_URL}/api/sessions`);
       return response.data;
     } catch (error) {
       throw new Error(
@@ -39,9 +34,7 @@ export const sessionService = {
   // Get session by ID
   getSessionById: async (sessionId) => {
     try {
-      const response = await axios.get(`${API_URL}/api/sessions/${sessionId}`, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      const response = await axios.get(`${API_URL}/api/sessions/${sessionId}`);
       return response.data;
     } catch (error) {
       throw new Error(
@@ -50,16 +43,7 @@ export const sessionService = {
     }
   },
 
-  // getSessionsByUser: async (userId, role) => {
-  //   try {
-  //     const response = await axios.get(`${API_URL}/api/sessions/${role}/${userId}`, {
-  //       headers: { Authorization: `Bearer ${getToken()}` }
-  //     });
-  //     return response.data;
-  //   } catch (error) {
-  //     throw new Error(error.response?.data?.message || 'Error fetching user sessions');
-  //   }
-  // },
+ 
 
   getSessionsByUser: async (userId, role) => {
     const response = await axios.get(

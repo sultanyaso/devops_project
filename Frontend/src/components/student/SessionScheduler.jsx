@@ -5,7 +5,7 @@ import { Clock, Calendar, Check, X } from "lucide-react";
 import { sessionService } from "../../services/sessionService";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function SessionScheduler({ coach, onSchedule, onClose }) {
+export default function SessionScheduler({ coach,user, onSchedule, onClose }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState(null);
   const [topic, setTopic] = useState("");
@@ -28,25 +28,21 @@ export default function SessionScheduler({ coach, onSchedule, onClose }) {
 
     try {
 
-      //  const session = new Sessions({
-      //       title,
-      //       date,
-      //       time,
-      //       duration,
-      //       coachUserId,
-      //       studentUserId,
-      //     });
+      console.log("coach", coach);
+      console.log("user", user);
+    
       const sessionData = {
         title: topic,
         date: selectedDate.toISOString().split("T")[0],
         time: selectedTime,
         duration: 60, // Default duration in minutes
-        coachUserId: coach.id,
-        studentUserId: localStorage.getItem("userId"),
+        studentUserId: user.id,
+        coachUserId: coach._id,
       };
 
-      const response = await sessionService.createSession(sessionData);
-      onSchedule(response);
+      console.log("sessionDataaaa", sessionData);
+
+      onSchedule(sessionData);
       onClose();
     } catch (err) {
       setError(err.message);

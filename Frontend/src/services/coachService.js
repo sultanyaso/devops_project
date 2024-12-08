@@ -16,7 +16,7 @@ export const coachService = {
     // Get all coaches
     getCoaches: async () => {
         try {
-          const response = await axios.get(`${API_URL}/api/coach`);
+          const response = await axios.get(`${API_URL}/api/coaches`);
           return response.data;
         } catch (error) {
           console.error('Error fetching coaches:', error);
