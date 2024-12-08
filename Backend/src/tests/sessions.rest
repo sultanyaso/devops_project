@@ -3,7 +3,6 @@ POST http://localhost:5000/api/sessions/create
 Content-Type: application/json
 
 {
-  "sessionId": "s12345",
   "title": "Session with Coach Ubaid",
   "date": "2024-12-15T10:00:00Z",
   "time": "10:00 AM",
@@ -20,12 +19,12 @@ GET http://localhost:5000/api/sessions/
 ###
 
 # Get session by ID (replace with actual sessionId)
-GET http://localhost:5000/api/sessions/s12345
+GET http://localhost:5000/api/sessions/6755a2e71d44999c9b958a92
 
 ###
 
 # Update session by ID (replace with actual sessionId)
-PATCH http://localhost:5000/api/sessions/s12345
+PATCH http://localhost:5000/api/sessions/6755a2e71d44999c9b958a92
 Content-Type: application/json
 
 {
@@ -36,4 +35,4 @@ Content-Type: application/json
 ###
 
 # Delete session by ID (replace with actual sessionId)
-DELETE http://localhost:5000/api/sessions/s12345
+DELETE http://localhost:5000/api/sessions/6755a2e71d44999c9b958a92

@@ -6,29 +6,14 @@ const router = express.Router();
 // Create a new session
 router.post("/create", async (req, res) => {
   try {
-    const {
-      sessionId,
-      title,
-      date,
-      time,
-      duration,
-      coachUserId,
-      studentUserId,
-    } = req.body;
+    const { title, date, time, duration, coachUserId, studentUserId } =
+      req.body;
 
-    if (
-      !sessionId ||
-      !title ||
-      !date ||
-      !time ||
-      !coachUserId ||
-      !studentUserId
-    ) {
+    if (!title || !date || !time || !coachUserId || !studentUserId) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
     const session = new Sessions({
-      sessionId,
       title,
       date,
       time,
@@ -59,7 +44,7 @@ router.get("/", async (req, res) => {
 // Get session by ID
 router.get("/:id", async (req, res) => {
   try {
-    const session = await Sessions.findOne({ sessionId: req.params.id });
+    const session = await Sessions.findOne({ _id: req.params.id });
     if (!session) {
       return res.status(404).json({ message: "Session not found" });
     }
@@ -74,7 +59,7 @@ router.get("/:id", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   try {
     const session = await Sessions.findOneAndUpdate(
-      { sessionId: req.params.id },
+      { _id: req.params.id },
       req.body,
       { new: true }
     );
@@ -92,7 +77,7 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const session = await Sessions.findOneAndDelete({
-      sessionId: req.params.id,
+      _id: req.params.id,
     });
     if (!session) {
       return res.status(404).json({ message: "Session not found" });
