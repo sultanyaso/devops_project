@@ -41,6 +41,28 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get sessions by student ID
+router.get("/student/:id", async (req, res) => {
+  try {
+    const sessions = await Sessions.find({ studentUserId: req.params.id });
+    res.json(sessions);
+  } catch (error) {
+    console.error("Error fetching sessions:", error);
+    res.status(500).json({ message: "Error fetching sessions" });
+  }
+});
+
+// Get sessions by coach ID
+router.get("/coach/:id", async (req, res) => {
+  try {
+    const sessions = await Sessions.find({ coachUserId: req.params.id });
+    res.json(sessions);
+  } catch (error) {
+    console.error("Error fetching sessions:", error);
+    res.status(500).json({ message: "Error fetching sessions" });
+  }
+});
+
 // Get session by ID
 router.get("/:id", async (req, res) => {
   try {
