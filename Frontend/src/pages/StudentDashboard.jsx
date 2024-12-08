@@ -9,7 +9,7 @@ import NetworkStats from "../components/student/NetworkStats";
 import NetworkAnalysisModal from "../components/student/network/NetworkAnalysisModal";
 import LinkedInPrompt from "../components/student/LinkedInPrompt";
 import QuickAction from "../components/student/QuickAction";
-import sessionService from "../services/sessionService";
+import { sessionService } from "../services/sessionService";
 import {
   getNetworkStats,
   isLinkedInConnected,
@@ -30,54 +30,51 @@ export default function StudentDashboard() {
   const [linkedInUser, setLinkedInUser] = useState({ name: "", email: "" });
 
   useEffect(() => {
-    // const loadData = async () => {
-    //   try {
-    //     setError(null);
-    //     const linkedInStatus = isLinkedInConnected();
-    //     setIsLinkedIn(linkedInStatus);
+    const loadData = async () => {
+      try {
+        setError(null);
+        const linkedInStatus = await isLinkedInConnected();
+        setIsLinkedIn(linkedInStatus);
 
-    //     const [userSessions, stats, profileData] = await Promise.all([
-    //       getSessionsByUser(user?.id, "student"),
-    //       linkedInStatus ? getNetworkStats() : null,
-    //       linkedInStatus ? getProfileData() : null,
-    //     ]);
+        const [userSessions, stats, profileData] = await Promise.all([
+          sessionService.getSessionsByUser(user?.id, "student"),
+          linkedInStatus ? getNetworkStats() : null,
+          linkedInStatus ? getProfileData() : null,
+        ]);
 
-    //     setSessions(userSessions || []);
-    //     setNetworkStats(stats);
-    //     if (profileData) {
-    //       console.log("Profile Data:", profileData);
-    //       setLinkedInUser({
-    //         name: `${profileData.given_name.localized.en_US} ${profileData.family_name.localized.en_US}`,
-    //         email: profileData.email,
-    //       });
-    //     }
-    //   } catch (error) {
-    //     console.error("Error loading dashboard data:", error);
-    //     setError("Failed to load some dashboard data. Please try refreshing.");
-    //   } finally {
+        setSessions(userSessions || []);
+        setNetworkStats(stats);
+        if (profileData) {
+          setLinkedInUser({
+            name: `${profileData.given_name.localized.en_US} ${profileData.family_name.localized.en_US}`,
+            email: profileData.email,
+          });
+        }
+      } catch (error) {
+        console.error("Error loading dashboard data:", error);
+        setError("Failed to load some dashboard data. Please try refreshing.");
+      } finally {
         setLoading(false);
-    //   }
-    // };
+      }
+    };
 
-    // if (user) {
-    //   loadData();
-    // }
+    if (user) {
+      loadData();
+    }
   }, [user]);
 
   const handleScheduleSession = async (sessionData) => {
     try {
-      await scheduleSession({
+      await sessionService.createSession({
         ...sessionData,
         student: {
           id: user.id,
           name: user.given_name + " " + user.family_name,
-          imageUrl:
-            user.profilePicture ||
-            "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+          imageUrl: user.profilePicture || "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
         },
       });
       setSelectedCoach(null);
-      const updatedSessions = await getSessionsByUser(user.id, "student");
+      const updatedSessions = await sessionService.getSessionsByUser(user.id, "student");
       setSessions(updatedSessions);
     } catch (error) {
       console.error("Error scheduling session:", error);

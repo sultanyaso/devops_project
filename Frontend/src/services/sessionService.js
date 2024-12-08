@@ -40,6 +40,17 @@ export const sessionService = {
     }
   },
 
+  getSessionsByUser: async (userId, role) => {
+    try {
+      const response = await axios.get(`${API_URL}/api/sessions/user/${userId}?role=${role}`, {
+        headers: { Authorization: `Bearer ${getToken()}` }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message || 'Error fetching user sessions');
+    }
+  },
+
   // Update session
   updateSession: async (sessionId, updateData) => {
     try {
