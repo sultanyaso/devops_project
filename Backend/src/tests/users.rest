@@ -1,29 +1,122 @@
-### Get User Profile
-# Replace <token> with a valid JWT token
+# Test Case 1: Get User Profile (Success)
 GET http://localhost:5000/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM3MDY5MzUsImV4cCI6MTczMzc5MzMzNX0.YikS16_0L1gPmQaEArYHD9uAhN4yMJdXFmvQHCG0-2k
-Content-Type: application/json
+Authorization: Bearer validToken
+Response:
+200 OK
+{
+  "userId": "validUserId",
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "role": "user"
+}
 
-### Update User Profile
-# Replace <token> with a valid JWT token
+# Test Case 2: Get User Profile (Failure - Unauthorized)
+GET http://localhost:5000/api/users/profile
+Authorization: Bearer invalidToken
+Response:
+401 Unauthorized
+{
+  "message": "Unauthorized"
+}
+
+# Test Case 3: Get All Users (Success)
+GET http://localhost:5000/api/users
+Authorization: Bearer validAdminToken
+Response:
+200 OK
+[
+  {
+    "userId": "user1Id",
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "role": "user"
+  },
+  {
+    "userId": "user2Id",
+    "name": "Jane Smith",
+    "email": "janesmith@example.com",
+    "role": "admin"
+  }
+]
+
+# Test Case 4: Get All Users (Failure - Unauthorized)
+GET http://localhost:5000/api/users
+Authorization: Bearer validUserToken
+Response:
+403 Forbidden
+{
+  "message": "Not authorized to access this resource"
+}
+
+# Test Case 5: Update User Profile (Success)
 PUT http://localhost:5000/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM3MDY5MzUsImV4cCI6MTczMzc5MzMzNX0.YikS16_0L1gPmQaEArYHD9uAhN4yMJdXFmvQHCG0-2k
+Authorization: Bearer validToken
 Content-Type: application/json
-
+Request Body:
 {
   "email": "newemail@example.com",
   "password": "newpassword123"
 }
+Response:
+200 OK
+{
+  "userId": "validUserId",
+  "name": "John Doe",
+  "email": "newemail@example.com",
+  "role": "user"
+}
 
-### Delete User Account
-# Replace <token> with a valid JWT token
-DELETE http://localhost:5000/api/users/profile
-Authorization: Bearer <token>
+# Test Case 6: Update User Profile (Failure - Invalid Fields)
+PUT http://localhost:5000/api/users/profile
+Authorization: Bearer validToken
 Content-Type: application/json
+Request Body:
+{
+  "name": "New Name"
+}
+Response:
+400 Bad Request
+{
+  "message": "Invalid updates"
+}
 
+# Test Case 7: Update User Profile (Failure - Unauthorized)
+PUT http://localhost:5000/api/users/profile
+Authorization: Bearer invalidToken
+Content-Type: application/json
+Request Body:
+{
+  "email": "newemail@example.com"
+}
+Response:
+401 Unauthorized
+{
+  "message": "Unauthorized"
+}
 
-### Get all users
-GET http://localhost:5000/api/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM3MDcxMjAsImV4cCI6MTczMzc5MzUyMH0.paRvceznNpfXnUJ8dQhdRofrCOX3_jAl6KNAPGRbTBk
+# Test Case 8: Delete User Account (Success)
+DELETE http://localhost:5000/api/users/profile
+Authorization: Bearer validToken
+Response:
+200 OK
+{
+  "message": "User account deleted successfully"
+}
 
-###
+# Test Case 9: Delete User Account (Failure - Unauthorized)
+DELETE http://localhost:5000/api/users/profile
+Authorization: Bearer invalidToken
+Response:
+401 Unauthorized
+{
+  "message": "Unauthorized"
+}
+
+# Test Case 10: Delete User Account (Failure - User Not Found)
+DELETE http://localhost:5000/api/users/profile
+Authorization: Bearer validToken
+Response:
+404 Not Found
+{
+  "message": "User not found"
+}

@@ -1,32 +1,120 @@
-### Get All Users (Admin Only)
-# Replace <token> with a valid admin JWT token
-GET http://localhost:5000/api/admin/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM2NTMyODMsImV4cCI6MTczMzczOTY4M30.MzJiw5kjGkC0YJOYSBrUTzd0RvFIIxxpG0ZWim1pE1M
+### Get all users - Success (Admin)
+GET http://localhost:5000/users
+Authorization: Bearer {{adminToken}}
 
-### Update User Status (Admin Only)
-# Replace <token> with a valid admin JWT token
-# Replace <userId> with the actual user ID
-PATCH http://localhost:5000/api/admin/users/67556c311e6dc40557bf55b1/status
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM2NTMyODMsImV4cCI6MTczMzczOTY4M30.MzJiw5kjGkC0YJOYSBrUTzd0RvFIIxxpG0ZWim1pE1M
+###
+
+### Get all users - Failure (Unauthorized)
+GET http://localhost:5000/users
+
+###
+
+### Get all users - Failure (Forbidden Role)
+GET http://localhost:5000/users
+Authorization: Bearer {{nonAdminToken}}
+
+###
+
+### Update user status - Success
+PATCH http://localhost:5000/users/{{userId}}/status
+Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
   "status": "active"
 }
 
-### Update User Role (Admin Only)
-# Replace <token> with a valid admin JWT token
-# Replace <userId> with the actual user ID
-PATCH http://localhost:5000/api/admin/users/67556c311e6dc40557bf55b1/role
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM2NTMyODMsImV4cCI6MTczMzczOTY4M30.MzJiw5kjGkC0YJOYSBrUTzd0RvFIIxxpG0ZWim1pE1M
+###
+
+### Update user status - Failure (Invalid Status)
+PATCH http://localhost:5000/users/{{userId}}/status
+Authorization: Bearer {{adminToken}}
 Content-Type: application/json
 
 {
-  "role": "student"
+  "status": "invalidStatus"
 }
 
-### Delete User (Admin Only)
-# Replace <token> with a valid admin JWT token
-# Replace <userId> with the actual user ID
-DELETE http://localhost:5000/api/admin/users/67556c311e6dc40557bf55b1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzNjFlNmRjNDA1NTdiZjU1YjQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzM2NTMyODMsImV4cCI6MTczMzczOTY4M30.MzJiw5kjGkC0YJOYSBrUTzd0RvFIIxxpG0ZWim1pE1M
+###
+
+### Update user status - Failure (User Not Found)
+PATCH http://localhost:5000/users/nonexistentUserId/status
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "status": "active"
+}
+
+###
+
+### Update user status - Failure (Unauthorized)
+PATCH http://localhost:5000/users/{{userId}}/status
+Content-Type: application/json
+
+{
+  "status": "active"
+}
+
+###
+
+### Update user role - Success
+PATCH http://localhost:5000/users/{{userId}}/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "coach"
+}
+
+###
+
+### Update user role - Failure (Invalid Role)
+PATCH http://localhost:5000/users/{{userId}}/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "invalidRole"
+}
+
+###
+
+### Update user role - Failure (User Not Found)
+PATCH http://localhost:5000/users/nonexistentUserId/role
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "role": "coach"
+}
+
+###
+
+### Update user role - Failure (Unauthorized)
+PATCH http://localhost:5000/users/{{userId}}/role
+Content-Type: application/json
+
+{
+  "role": "coach"
+}
+
+###
+
+### Delete user - Success
+DELETE http://localhost:5000/users/{{userId}}
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Delete user - Failure (User Not Found)
+DELETE http://localhost:5000/users/nonexistentUserId
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Delete user - Failure (Unauthorized)
+DELETE http://localhost:5000/users/{{userId}}
+
+###
+

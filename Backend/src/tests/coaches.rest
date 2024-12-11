@@ -1,27 +1,109 @@
-### Get All Coaches
-GET http://localhost:5000/api/coaches
-Content-Type: application/json
+### Get all coaches - Success
+GET http://localhost:5000/coaches
 
-### Get Coach by ID
-# Replace <coachId> with a valid coach ID
-GET http://localhost:5000/api/coaches/<coachId>
-Content-Type: application/json
+###
 
-### Update Coach Profile
-# Replace <token> with a valid JWT token (coach or admin)
-# Replace <coachId> with the coach's ID
-PUT http://localhost:5000/api/coaches/<coachId>
-Authorization: Bearer <token>
+### Get all coaches - Failure (Internal Server Error)
+GET http://localhost:5000/coaches
+Authorization: Bearer {{invalidToken}}
+
+###
+
+### Get coach by ID - Success
+GET http://localhost:5000/coaches/{{coachId}}
+
+###
+
+### Get coach by ID - Failure (Coach Not Found)
+GET http://localhost:5000/coaches/nonexistentCoachId
+
+###
+
+### Get coach by ID - Failure (Internal Server Error)
+GET http://localhost:5000/coaches/{{coachId}}
+Authorization: Bearer {{invalidToken}}
+
+###
+
+### Update coach profile - Success (Coach updating their own profile)
+PUT http://localhost:5000/coaches/{{coachId}}
+Authorization: Bearer {{coachToken}}
 Content-Type: application/json
 
 {
   "name": "Updated Coach Name",
   "email": "updatedcoach@example.com",
-  "profilePicture": "https://example.com/profile.jpg"
+  "profilePicture": "newProfilePicture.jpg"
 }
 
-### Delete Coach
-# Replace <token> with a valid admin JWT token
-# Replace <coachId> with the coach's ID
-DELETE http://localhost:5000/api/coaches/<coachId>
-Authorization: Bearer <token>
+###
+
+### Update coach profile - Success (Admin updating coach profile)
+PUT http://localhost:5000/coaches/{{coachId}}
+Authorization: Bearer {{adminToken}}
+Content-Type: application/json
+
+{
+  "name": "Updated Coach Name by Admin",
+  "email": "adminupdatedcoach@example.com",
+  "profilePicture": "adminProfilePicture.jpg"
+}
+
+###
+
+### Update coach profile - Failure (Coach trying to update another coach's profile)
+PUT http://localhost:5000/coaches/{{otherCoachId}}
+Authorization: Bearer {{coachToken}}
+Content-Type: application/json
+
+{
+  "name": "Invalid Update by Coach",
+  "email": "invalidcoach@example.com"
+}
+
+###
+
+### Update coach profile - Failure (Invalid updates)
+PUT http://localhost:5000/coaches/{{coachId}}
+Authorization: Bearer {{coachToken}}
+Content-Type: application/json
+
+{
+  "invalidField": "Some invalid value"
+}
+
+###
+
+### Update coach profile - Failure (Unauthorized)
+PUT http://localhost:5000/coaches/{{coachId}}
+Content-Type: application/json
+
+{
+  "name": "Updated Coach Name"
+}
+
+###
+
+### Delete coach - Success (Admin deleting a coach)
+DELETE http://localhost:5000/coaches/{{coachId}}
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Delete coach - Failure (Coach trying to delete another coach's profile)
+DELETE http://localhost:5000/coaches/{{otherCoachId}}
+Authorization: Bearer {{coachToken}}
+
+###
+
+### Delete coach - Failure (Coach not found)
+DELETE http://localhost:5000/coaches/nonexistentCoachId
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Delete coach - Failure (Unauthorized)
+DELETE http://localhost:5000/coaches/{{coachId}}
+
+###
+

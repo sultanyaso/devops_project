@@ -1,52 +1,101 @@
-### Register a new user
-POST http://localhost:5000/api/auth/register
+### Register new user - Success
+POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-  "name": "Test User",
-  "email": "testuser@example.com",
+  "name": "John Doe",
+  "email": "johndoe@example.com",
   "password": "password123",
   "role": "student"
 }
 
-### Register a admin user
-POST http://localhost:5000/api/auth/register
+###
+
+### Register new user - Failure (Email Already Registered)
+POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-  "name": "Test Admin",
-  "email": "testadmin@example.com",
+  "name": "John Doe",
+  "email": "existinguser@example.com",
   "password": "password123",
-  "role": "admin"
+  "role": "student"
 }
 
-### Login
-POST http://localhost:5000/api/auth/login
+###
+
+### Register new user - Failure (Missing Fields)
+POST http://localhost:5000/register
 Content-Type: application/json
 
 {
-  "email": "testuser@example.com",
+  "email": "johndoe@example.com",
   "password": "password123"
 }
 
-### Login as Admin
-POST http://localhost:5000/api/auth/login
+###
+
+### Login - Success
+POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-  "email": "testadmin@example.com",
-  "password": "1"
+  "email": "johndoe@example.com",
+  "password": "password123"
 }
 
+###
 
-### Get Current User
-# Replace <token> with the actual JWT token from the login response
-GET http://localhost:5000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NzU1NmMzMTFlNmRjNDA1NTdiZjU1YjEiLCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTczMzY1MTUxNywiZXhwIjoxNzMzNzM3OTE3fQ.o2_2yBB2tqtGFIaFQG-euZXSIARxPt-zC4CIoh907vQ
-
-### LinkedIn Exchange Code for Token
-POST http://localhost:5000/api/auth/linkedin/token
+### Login - Failure (Invalid Credentials)
+POST http://localhost:5000/login
 Content-Type: application/json
+
 {
-  "code": "AQQo9fjYwFZJWhmRhvLYuuBImptoA_lJsXglm7B5s1l_CfMsS2gC3PwRxRlr1h7bb4d-KxZsEWlLipaY3-drWpUNp_qJTE-WZFgfReQvfaUm0VBdCqpsFhgeh9XdkRbqWpqv3ArztAMFD7hi82IYrqv8v526dBGddL0Mgtlai0y4OK4KSPXy1x2OF2b_qiINvbtD5TuvjXmMWnm4S1c"
+  "email": "johndoe@example.com",
+  "password": "wrongpassword"
 }
+
+###
+
+### Login - Failure (User Not Found)
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+  "email": "nonexistent@example.com",
+  "password": "password123"
+}
+
+###
+
+### LinkedIn Exchange Code for Token - Success
+GET http://localhost:5000/linkedin/token?code=validLinkedInCode
+
+###
+
+### LinkedIn Exchange Code for Token - Failure (Invalid Code)
+GET http://localhost:5000/linkedin/token?code=invalidCode
+
+###
+
+### LinkedIn Exchange Code for Token - Failure (Missing Code)
+GET http://localhost:5000/linkedin/token
+
+###
+
+### Get Current User - Success
+GET http://localhost:5000/me
+Authorization: Bearer {{validToken}}
+
+###
+
+### Get Current User - Failure (Unauthorized)
+GET http://localhost:5000/me
+
+###
+
+### Get Current User - Failure (Invalid Token)
+GET http://localhost:5000/me
+Authorization: Bearer invalidToken
+
+###

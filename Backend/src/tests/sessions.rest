@@ -1,59 +1,111 @@
-# Create a new session
-POST http://localhost:5000/api/sessions/create
+### Create Session - Success
+POST http://localhost:5000/sessions/create
 Content-Type: application/json
 
 {
-  "title": "Session with Coach Daddy",
-  "date": "2024-12-15T10:00:00Z",
+  "title": "Math Coaching Session",
+  "date": "2024-12-15",
+  "time": "10:00 AM",
+  "duration": "1 hour",
+  "coachUserId": "validCoachId",
+  "studentUserId": "validStudentId"
+}
+
+###
+
+### Create Session - Failure (Missing required fields)
+POST http://localhost:5000/sessions/create
+Content-Type: application/json
+
+{
+  "title": "Math Coaching Session",
+  "date": "2024-12-15",
+  "time": "10:00 AM",
+  "duration": "1 hour"
+}
+
+###
+
+### Get All Sessions - Success
+GET http://localhost:5000/sessions
+
+###
+
+### Get All Sessions - Failure (Internal Server Error)
+GET http://localhost:5000/sessions
+Authorization: Bearer {{invalidToken}}
+
+###
+
+### Get Sessions by Student ID - Success
+GET http://localhost:5000/sessions/student/{{studentId}}
+
+###
+
+### Get Sessions by Student ID - Failure (Student Not Found)
+GET http://localhost:5000/sessions/student/nonexistentStudentId
+
+###
+
+### Get Sessions by Coach ID - Success
+GET http://localhost:5000/sessions/coach/{{coachId}}
+
+###
+
+### Get Sessions by Coach ID - Failure (Coach Not Found)
+GET http://localhost:5000/sessions/coach/nonexistentCoachId
+
+###
+
+### Get Session by ID - Success
+GET http://localhost:5000/sessions/{{sessionId}}
+
+###
+
+### Get Session by ID - Failure (Session Not Found)
+GET http://localhost:5000/sessions/nonexistentSessionId
+
+###
+
+### Update Session - Success
+PATCH http://localhost:5000/sessions/{{sessionId}}
+Content-Type: application/json
+
+{
+  "title": "Updated Math Coaching Session",
+  "date": "2024-12-16",
   "time": "11:00 AM",
-  "duration": 60,
-  "coachUserId": "67558917defbd53afcf4d32c",
-  "studentUserId": "675583b8defbd53afcf4d326"
+  "duration": "1.5 hours"
 }
 
 ###
 
-# Get all sessions
-GET http://localhost:5000/api/sessions/
-
-###
-
-# Get session by ID (replace with actual sessionId)
-GET http://localhost:5000/api/sessions/6755a2e71d44999c9b958a92
-
-###
-
-# Update session by ID (replace with actual sessionId)
-PATCH http://localhost:5000/api/sessions/6755a2e71d44999c9b958a92
+### Update Session - Failure (Session Not Found)
+PATCH http://localhost:5000/sessions/nonexistentSessionId
 Content-Type: application/json
 
 {
-  "title": "Updated Session with Coach A",
-  "status": "confirmed"
+  "title": "Updated Math Coaching Session",
+  "date": "2024-12-16",
+  "time": "11:00 AM",
+  "duration": "1.5 hours"
 }
 
 ###
 
-# Delete session by ID (replace with actual sessionId)
-DELETE http://localhost:5000/api/sessions/6755a2e71d44999c9b958a92
+### Delete Session - Success
+DELETE http://localhost:5000/sessions/{{sessionId}}
 
 ###
 
-# Get all sessions for a specific coach
-GET http://localhost:5000/api/sessions/coach/675585b538da439b04294109
-
+### Delete Session - Failure (Session Not Found)
+DELETE http://localhost:5000/sessions/nonexistentSessionId
 
 ###
 
-# Create a new session
-POST http://localhost:5000/api/sessions/create
-Content-Type: application/json
+### Delete Session - Failure (Unauthorized)
+DELETE http://localhost:5000/sessions/{{sessionId}}
+Authorization: Bearer {{invalidToken}}
 
-{
-  "title": "Session",
-  "date": "2024-12-14T10:00:00Z",
-  "time": "10:04 AM",
-  "duration": 40,
-  "coachUserId": "675585b538da439b04294109",
-  "studentUserId": "67559e83defbd53afcf4d32f"
-}
+###
+
