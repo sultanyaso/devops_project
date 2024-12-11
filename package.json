@@ -1,0 +1,27 @@
+{
+  "name": "leap-career-platform",
+  "private": true,
+  "scripts": {
+    "start": "npx concurrently \"npm run frontend\" \"npm run backend\"",
+    "frontend": "cd Frontend && npm run dev",
+    "backend": "cd Backend && npm run start",
+    "install-all": "npm install && cd Frontend && npm install && cd ../Backend && npm install",
+    "test": "jest --watch"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.5.2",
+    "babel-jest": "^29.7.0",
+    "concurrently": "^8.2.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "dependencies": {
+    "react-router-dom": "^7.0.2"
+  }
+}
