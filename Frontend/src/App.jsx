@@ -77,6 +77,7 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <AppRoutes />
+        <AdminDashboard />
       </AuthProvider>
     </BrowserRouter>
   );
