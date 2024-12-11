@@ -14,7 +14,7 @@ describe("User Login", () => {
     //cy.get('[role="dialog"]').should("be.visible");
 
     // Enter email
-    cy.get('input[type="email"]').type("test@example.com");
+    cy.get('input[type="email"]').type("testuser@example.com");
 
     // Enter password
     cy.get('input[type="password"]').type("password123");
@@ -24,7 +24,7 @@ describe("User Login", () => {
 
     // Check if login was successful
     // This could be checking for a welcome message, a dashboard URL, or the navbar changing
-    cy.get("nav").should("contain", "Log Out");
+    cy.get("nav").should("contain", "Logout");
     // or
     // cy.url().should('include', '/dashboard');
   });

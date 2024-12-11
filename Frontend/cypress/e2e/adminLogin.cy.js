@@ -9,10 +9,10 @@ describe("User Login", () => {
     cy.get('nav button:contains("Log In")').click();
 
     // Enter email
-    cy.get('input[id="email"]').type("testuser@example.com");
+    cy.get('input[id="email"]').type("testadmin@example.com");
 
     // Enter password
-    cy.get('input[id="password"]').type("password123");
+    cy.get('input[id="password"]').type("admin123");
 
     // Click the login button to submit the form
     cy.get('button[type="submit"]').click();
