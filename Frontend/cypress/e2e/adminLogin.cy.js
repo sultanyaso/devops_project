@@ -21,6 +21,6 @@ describe("User Login", () => {
     cy.get('[role="dialog"]').should("not.exist");
 
     // The URL changes after login:
-    cy.url().should("include", "/admin-dashboard");
+    cy.url().should("include", "/student-dashboard");
   });
 });

@@ -1,76 +1,99 @@
-// cypress/integration/login.cy.js
-
-describe("User Login", () => {
+describe("User Registration", () => {
   beforeEach(() => {
-    // Visit the landing page before each test
+    // Reset to the landing page before each test
     cy.visit("/");
   });
 
-  it("should log in with valid credentials", () => {
+  it("should successfully register a new student", () => {
+    // Click on Get Started or navigate to signup
     // Click the login button in the navbar to open the AuthModal
-    cy.get("nav").contains("Log In").click();
+    cy.get('nav button:contains("Log In")').click();
 
-    // Wait for the AuthModal to appear
-    //cy.get('[role="dialog"]').should("be.visible");
+    // Click the login button in the navbar to open the AuthModal
+    cy.get('button:contains("Sign up")').click();
 
-    // Enter email
-    cy.get('input[type="email"]').type("testuser@example.com");
-
-    // Enter password
-    cy.get('input[type="password"]').type("password123");
+    // Fill out the registration form
+    cy.get("#name").type("Test Student");
+    cy.get("#email").type(`test-student-${Date.now()}@example.com`);
+    cy.get("#password").type("StrongPassword123!");
+    cy.get("#role").select("Student/Job Seeker");
 
     // Submit the form
-    cy.get("form").submit();
+    cy.get('button[type="submit"]').click();
 
-    // Check if login was successful
-    // This could be checking for a welcome message, a dashboard URL, or the navbar changing
-    cy.get("nav").should("contain", "Logout");
-    // or
-    // cy.url().should('include', '/dashboard');
+    // Assert successful registration
+    // This could be a redirect, a success message, or checking user is logged in
+    cy.url().should("include", "/student-dashboard");
+    //cy.get('[data-testid="user-profile"]').should('be.visible');
   });
 
-  it("should show an error message with invalid credentials", () => {
+  it("should show error for invalid registration", () => {
     // Click the login button in the navbar to open the AuthModal
-    cy.get("nav").contains("Log In").click();
+    cy.get('nav button:contains("Log In")').click();
 
-    // Wait for the AuthModal to appear
-    cy.get('[role="dialog"]').should("be.visible");
+    // Click the login button in the navbar to open the AuthModal
+    cy.get('button:contains("Sign up")').click();
 
-    // Enter invalid email
-    cy.get('input[type="email"]').type("invalid@example.com");
+    // Submit form with empty fields
+    cy.get('button[type="submit"]').click();
 
-    // Enter invalid password
-    cy.get('input[type="password"]').type("wrongpassword");
+    // Check for validation errors
+    cy.get("input:invalid").should("have.length", 3);
+  });
+
+  it("should register a career coach", () => {
+    // Click the login button in the navbar to open the AuthModal
+    cy.get('nav button:contains("Log In")').click();
+
+    // Click the login button in the navbar to open the AuthModal
+    cy.get('button:contains("Sign up")').click();
+
+    // Fill out the registration form for a coach
+    cy.get("#name").type("Test Coach");
+    cy.get("#email").type(`test-coach-${Date.now()}@example.com`);
+    cy.get("#password").type("CoachPassword456!");
+    cy.get("#role").select("Career Coach");
 
     // Submit the form
-    cy.get("form").submit();
+    cy.get('button[type="submit"]').click();
 
-    // Check for error message
-    cy.get(".text-red-500")
-      .should("be.visible")
-      .and("contain", "Failed to log in");
+    // Assert successful registration
+    cy.url().should("include", "/coach-dashboard");
   });
 
-  it("should toggle between login and signup forms", () => {
+  it("should disable submit button while loading", () => {
     // Click the login button in the navbar to open the AuthModal
-    cy.get("nav").contains("Log In").click();
+    cy.get('nav button:contains("Log In")').click();
 
-    // Wait for the AuthModal to appear
-    cy.get('[role="dialog"]').should("be.visible");
+    // Click the login button in the navbar to open the AuthModal
+    cy.get('button:contains("Sign up")').click();
 
-    // Check if we're on the login form
-    cy.get("form").should("contain", "Log In");
+    // Fill out the form
+    cy.get("#name").type("Test User");
+    cy.get("#email").type(`test-user-${Date.now()}@example.com`);
+    cy.get("#password").type("StrongPassword123!");
 
-    // Click to switch to signup form
-    cy.contains("Create an account").click();
+    // Mock the signup to simulate loading state
+    cy.intercept("POST", "/api/auth/register", {
+      delay: 1000,
+      statusCode: 200,
+      body: { success: true },
+    });
 
-    // Check if we're on the signup form
-    cy.get("form").should("contain", "Create Account");
+    // Click submit
+    cy.get('button[type="submit"]').should("not.be.disabled").click();
 
-    // Click to switch back to login form
-    cy.contains("Already have an account?").click();
+    // Check that button is disabled during submission
+    cy.get('button[type="submit"]')
+      .should("be.disabled")
+      .and("contain", "Creating Account...");
 
-    // Check if we're back on the login form
-    cy.get("form").should("contain", "Log In");
+    // Wait for the request to complete
+    cy.wait(1000);
+
+    // Check that button is re-enabled after submission
+    cy.get('button[type="submit"]')
+      .should("not.be.disabled")
+      .and("contain", "Create Account");
   });
 });
