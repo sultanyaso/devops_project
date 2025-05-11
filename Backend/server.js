@@ -20,7 +20,7 @@ app.use(express.json());
 const MONGODB_URI = process.env.MONGODB_URI;
 
 try {
-  await mongoose.connect(MONGODB_URI, {
+  await mongoose.connect(MONGODB_URI || 'mongodb://localhost:27017/LEAP-DB', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
