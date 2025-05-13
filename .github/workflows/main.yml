@@ -61,10 +61,14 @@ jobs:
     - name: Verify deployment
       run: |
         echo "Waiting for backend deployment to be ready..."
-        kubectl -n leap-app rollout status deployment/my-backend-app
+        kubectl -n leap-app rollout status deployment/my-backend
         
         echo "Waiting for frontend deployment to be ready..."
-        kubectl -n leap-app rollout status deployment/my-frontend-app
+        kubectl -n leap-app rollout status deployment/my-frontend
+
+        echo "Waiting for mongodb deployment to be ready..."
+        kubectl -n leap-app rollout status deployment/mongodb
+        
         
         echo "Getting all resources information..."
         kubectl -n leap-app get all -o wide
