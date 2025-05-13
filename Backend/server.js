@@ -16,14 +16,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
+// Middleware to log every request
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+  next(); // Pass control to the next middleware or route handler
+});
+
+
 // Database connection
 const MONGODB_URI = process.env.MONGODB_URI;
 
 try {
-  await mongoose.connect(MONGODB_URI || 'mongodb://localhost:27017/LEAP-DB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  await mongoose.connect(MONGODB_URI);
   console.log("MongoDB connected successfully");
 } catch (error) {
   console.error("MongoDB connection error:", error);
@@ -42,7 +47,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

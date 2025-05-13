@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-backend
+  namespace: leap-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-backend
+  template:
+    metadata:
+      labels:
+        app: my-backend
+    spec:
+      containers:
+      - name: my-backend
+        image: yasirsultan/my-backend-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - secretRef:
+            name: my-backend-secrets

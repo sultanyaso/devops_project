@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: leap-app
+spec:
+  type: NodePort
+  selector:
+    app: my-frontend
+  ports:
+    - port: 80
+      targetPort: 3000
+      nodePort: 30008
