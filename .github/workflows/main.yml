@@ -20,12 +20,12 @@ jobs:
 
     - name: Build Backend Docker image
       run: |
-        cd backend
+        cd Backend
         docker build -t yasirsultan/my-backend-app:latest .
 
     - name: Build Frontend Docker image
       run: |
-        cd frontend
+        cd Frontend
         docker build -t yasirsultan/my-frontend-app:latest .
 
     - name: Login to Docker Hub
