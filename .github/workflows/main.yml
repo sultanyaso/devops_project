@@ -1,0 +1,70 @@
+name: Build and Test Locally on runons.
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-deploy:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Docker to use Minikube's environment
+      run: |
+        echo "Configuring Docker to use Minikube's daemon..."
+        eval $(minikube -p minikube docker-env)
+
+    - name: Build Backend Docker image
+      run: |
+        cd backend
+        docker build -t yasirsultan/my-backend-app:latest .
+
+    - name: Build Frontend Docker image
+      run: |
+        cd frontend
+        docker build -t yasirsultan/my-frontend-app:latest .
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+    - name: Push Docker images to Docker Hub
+      run: |
+        docker push ${{ secrets.DOCKER_USERNAME }}/my-backend-app:latest
+        docker push ${{ secrets.DOCKER_USERNAME }}/my-frontend-app:latest
+
+
+    - name: Apply namespace
+      run: kubectl apply -f namespace.yaml
+
+    - name: Apply MongoDB resources
+      run: |
+        kubectl apply -f mongo.yaml
+        
+    - name: Secrets and services
+      run: |
+        kubectl apply -f backend-secrets.yaml
+        kubectl apply -f backend-service.yaml
+        kubectl apply -f frontend-service.yaml
+         kubectl apply -f service.yaml
+        
+        
+
+    - name: Deploy to Minikube
+      run: |
+        kubectl apply -f backend-deployment.yaml
+        kubectl apply -f frontend-deployment.yaml
+
+    - name: Verify deployment
+      run: |
+        echo "Waiting for backend deployment to be ready..."
+        kubectl -n leap-app rollout status deployment/my-backend-app
+        
+        echo "Waiting for frontend deployment to be ready..."
+        kubectl -n leap-app rollout status deployment/my-frontend-app
+        
+        echo "Getting all resources information..."
+        kubectl -n leap-app get all -o wide
